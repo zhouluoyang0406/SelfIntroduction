@@ -56,8 +56,16 @@ interface List<T> {
 ### 设计模式
 #### 备忘录模式
   ##### 1.什么是备忘录模式
-          备忘录模式，是指一种可以回退到初始化数据的模式。
-        2.什么时候使用备忘录模式
+          * 备忘录模式，是指一种可以回退到初始化数据的模式。
+  ##### 2.什么时候使用备忘录模式
+          * 需要保存和恢复数据的相关状态场景
+          * 提供回滚
+          * jdbc的事务管理就是备忘录模式
+          * 分析备份数据
+  ##### 3.UML类图
+          场景:一个男孩拥有回到过去的能力，可以反复的追求一个妹子。男孩在靠近一个妹子前先打点记录当前的状态，如何一顿穷追猛打，惨遭失败后，回到记录之前，再来一次。
+          UML图：
+          ![](http://www.plantuml.com/plantuml/png/dP3D2i9038Jl-nGvMgHz12bwzjGdY6kenVqfIIg8-EvIxFQdeWTF0z-mCxCfHP6ryyvOXoAmZtTuc1nQRcwe19Lo4seGHIMpXROxkSQ2lM2egUhX9fjmJVh19B5vqiotJAXq94z1u_mXasZaqHaK_5ipynmM9-FRwh_cfV03CYbUYHVngosBXi5RTVpuHN_nejYbK3DLnZmVQKdXt7dt0W00)
 #### 备忘录模式
 #### 访问者模式
 #### 状态模式
