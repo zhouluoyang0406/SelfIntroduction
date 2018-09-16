@@ -105,8 +105,77 @@ public class Client {
 ```
 ##### 5.其他
 其一使用clone融合备忘录角色和发起类(Boy)。其二多状态模式就是多个state。其三多备份就是管理多个快照。其四为了使内置类不被外部使用到，可以让备忘录管理者管理接口(Imemento)，正式的实现使用内部实现(Memento)
-#### 备忘录模式
 #### 访问者模式
+##### 1.什么是访问者模式
+封装一些作用于某种数据结构中的各元素的操作，它可以在不改变数据结构的前提下定义作用于这些元素的新操作
+##### 2.什么时候使用访问者模式
+业务规则需要遍历不同的对象，这些对象属于同一对象结构。遍历多个不同的对象,然后执行不同的操作，也就是针对访问的对象不同，执行不同的操作。
+##### 3.UML类图
+* UML图：
+![](http://www.plantuml.com/plantuml/png/ZP7DJiGW483lFCKSQSoIo0EOJOm7JnusyKwdes8eR63efVhkijqkLJOQJy1yasz-s2SsaVFeXFLCySKWmUEpJPP3X5dSm37tpY9CmGumdUBoFdYCnFJWQ2JFjq3bqlqdLI-fkXEVGg0pAS5MgOQU-dT2Fd3Cd2Dzxs6rG56QwfIRhIQqVG_X44RYD-jVvQbHqoUE1lbC3I8TMTQff_DPlAlsQk3vDwGNT14fzN5NbockBBjTmUkhfVedRNQYr8Ok_YNOrlYJQh4dFvIl_m80）
+##### 4.java实现
+```java
+public abstract class Element {
+    public void dosome(){
+
+    }
+    abstract void accept(Ivisitor ivisitor);
+}
+public class ConcreteElementOne extends Element {
+    void accept(Ivisitor ivisitor) {
+        ivisitor.visit(this);
+    }
+    @Override
+    public void dosome() {
+        System.out.println(1);
+    }
+}
+public class ConcreteElementTwo extends Element {
+    void accept(Ivisitor ivisitor) {
+        ivisitor.visit(this);
+    }
+
+    @Override
+    public void dosome() {
+        System.out.println(2);
+    }
+}
+public interface Ivisitor {
+    void visit(ConcreteElementOne concreteElementOne);
+    void visit(ConcreteElementTwo concreteElementTwo);
+}
+public class ObjectStruture {
+    public  static Element createElem(){
+        Random random=new Random();
+        int a=random.nextInt(100);
+        if (a>50){
+            return new ConcreteElementOne();
+        }else {
+            return new ConcreteElementTwo();
+        }
+    }
+}
+public class Visitor implements Ivisitor {
+    public void visit(ConcreteElementOne concreteElementOne) {
+        concreteElementOne.dosome();
+    }
+
+    public void visit(ConcreteElementTwo concreteElementTwo) {
+        concreteElementTwo.dosome();
+    }
+}
+public class Client {
+    public static void main(String[] args) {
+        for (int i=0;i<10;i++){
+            Element e=ObjectStruture.createElem();
+            e.accept(new Visitor());
+        }
+    }
+}
+```
+##### 5.其他
+只要切换Visitor，可以很方便的改变样式；多访问者,IShowVisitor和ITotalVisitor继承IVisitor；这个和java的双分派有关，重载是静态，重写是动态
+
 #### 状态模式
 #### 解释器模式
 #### 享元模式
