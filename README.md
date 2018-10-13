@@ -56,9 +56,22 @@ interface List<T> {
 ### 设计模式
 #### 单例模式
 ##### 1.什么是单例模式
+一个国家只有一个皇帝，这个皇帝就是单例模式
 ##### 2.什么时候使用单例模式
+当你觉得一个类在应用中只有一个实例的时候，就应该使用单例模式
 ##### 3.UML类图
+单例模式只有一个自己的类，可以选择饿汉模式和懒汉模式
+* UML图：
+![](http://www.plantuml.com/plantuml/png/SoWkIImgAStDuKhEIImkLWZEp4lFIIt9prEevbBG1KgMP2Ohf6Nc9UOWITagvAMM8_WQcbmAsb2b24NfgIN8Acgv75BpKe0M0G00)
 ##### 4.JAVA实现
+```java
+public class Singleton {
+    private static final Singleton singleton=new Singleton();
+    public static Singleton getSingleton(){
+        return singleton;
+    }
+}
+```
 ##### 5.其他
 
 #### 工厂模式
