@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/DesignPatterns/DesignPatterns.iml" filepath="$PROJECT_DIR$/DesignPatterns/DesignPatterns.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/SelfIntroduction.iml" filepath="$PROJECT_DIR$/.idea/SelfIntroduction.iml" />
-      <module fileurl="file://$PROJECT_DIR$/DesignPatterns/com.745121.iml" filepath="$PROJECT_DIR$/DesignPatterns/com.745121.iml" />
     </modules>
   </component>
 </project>

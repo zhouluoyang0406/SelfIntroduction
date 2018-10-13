@@ -60,7 +60,7 @@ interface List<T> {
 ##### 2.什么时候使用单例模式
 当你觉得一个类在应用中只有一个实例的时候，就应该使用单例模式
 ##### 3.UML类图
-单例模式只有一个自己的类，可以选择饿汉模式和懒汉模式
+单例模式只有一个自己的类，可以选择饿汉模式和懒汉模式，里面包含线程安全和线程不安全的问题不是该章节的重点
 * UML图：
 ![](http://www.plantuml.com/plantuml/png/SoWkIImgAStDuKhEIImkLWZEp4lFIIt9prEevbBG1KgMP2Ohf6Nc9UOWITagvAMM8_WQcbmAsb2b24NfgIN8Acgv75BpKe0M0G00)
 ##### 4.JAVA实现
@@ -73,14 +73,19 @@ public class Singleton {
 }
 ```
 ##### 5.其他
-
+* Spring里面默认的对象管理方法，就是单例的,如果想使用原型就'prototype'。在kotlin中可以使用object定义一个类，这个类就可以当作单例使用，例如工具类
+* 也可以不是单例，选择固定数量的对象，用一个ArrayList保管就好
 #### 工厂模式
 ##### 1.什么是工厂模式
+负责创建产品类实例的类，就是工厂模式。具体定义就是定义一个创建对象的接口，让子类决定实例化哪一个类，工厂方法使一个类的实例化延迟到子类。
 ##### 2.什么时候使用工厂模式
+你有一些产品初始化比较复杂的时候，就是用工厂类吧，可以屏蔽复杂的实现。
 ##### 3.UML类图
+* UML图：
+![](http://www.plantuml.com/plantuml/png/SoWkIImgAStDuKfCAYufIamkKKZEIImkLWWeoizA1VAgkRGLKlABytDJIp8oyz8rDBbgkI0g_FDIYL1Kaf5QH5YP6z3Y_A9Ai0gOwlJK4YXJ8xYa2AXUeHXCWNGXsQshMsC7qyC5jmvJ1g53JyyEPY5C0wQ4GsfU2Z1O0000)
 ##### 4.JAVA实现
 ##### 5.其他
-
+* 符合洛必达法则，我只想知道我可以知道的；符合依赖倒置，只生产抽象；里氏替换法则，子类可以替换父类，ok！
 #### 抽象工厂模式
 ##### 1.什么是抽象工厂模式
 ##### 2.什么时候使用抽象工厂模式
