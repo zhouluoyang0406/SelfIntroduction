@@ -84,6 +84,39 @@ public class Singleton {
 * UML图：
 ![](http://www.plantuml.com/plantuml/png/SoWkIImgAStDuKfCAYufIamkKKZEIImkLWWeoizA1VAgkRGLKlABytDJIp8oyz8rDBbgkI0g_FDIYL1Kaf5QH5YP6z3Y_A9Ai0gOwlJK4YXJ8xYa2AXUeHXCWNGXsQshMsC7qyC5jmvJ1g53JyyEPY5C0wQ4GsfU2Z1O0000)
 ##### 4.JAVA实现
+```java
+public abstract class Project {
+    abstract void doSomething();
+}
+public class OtherProject extends Project {
+    void doSomething() {
+        System.out.printf("Other");
+    }
+}
+public class OneProject extends Project {
+    void doSomething() {
+        System.out.printf("one");
+    }
+}
+public class Factory {
+    public static Project getProject(String string){
+        if (string.equals("Other")){
+            return new OtherProject();
+        }else if (string.equals("One")){
+            return new OneProject();
+        }else {
+            return null;
+        }
+
+    }
+}
+public class Client {
+    public static void main(String[] args) {
+        Factory.getProject("One").doSomething();
+        Factory.getProject("Other").doSomething();
+    }
+}
+```
 ##### 5.其他
 * 符合洛必达法则，我只想知道我可以知道的；符合依赖倒置，只生产抽象；里氏替换法则，子类可以替换父类，ok！
 #### 抽象工厂模式
@@ -91,6 +124,8 @@ public class Singleton {
 ##### 2.什么时候使用抽象工厂模式
 ##### 3.UML类图
 ##### 4.JAVA实现
+```java
+```
 ##### 5.其他
 
 #### 模版方法模式
@@ -98,6 +133,8 @@ public class Singleton {
 ##### 2.什么时候使用模版方法模式
 ##### 3.UML类图
 ##### 4.JAVA实现
+```java
+```
 ##### 5.其他
 
 #### 建造者模式
@@ -105,6 +142,8 @@ public class Singleton {
 ##### 2.什么时候使用建造者模式
 ##### 3.UML类图
 ##### 4.JAVA实现
+```java
+```
 ##### 5.其他
 
 #### 代理模式
@@ -112,6 +151,8 @@ public class Singleton {
 ##### 2.什么时候使用代理模式
 ##### 3.UML类图
 ##### 4.JAVA实现
+```java
+```
 ##### 5.其他
 
 #### 原型模式
@@ -119,6 +160,8 @@ public class Singleton {
 ##### 2.什么时候使用原型模式
 ##### 3.UML类图
 ##### 4.JAVA实现
+```java
+```
 ##### 5.其他
 
 #### 中介者模式
@@ -126,6 +169,8 @@ public class Singleton {
 ##### 2.什么时候使用中介者模式
 ##### 3.UML类图
 ##### 4.JAVA实现
+```java
+```
 ##### 5.其他
 
 #### 命令模式
@@ -133,6 +178,8 @@ public class Singleton {
 ##### 2.什么时候使用命令模式
 ##### 3.UML类图
 ##### 4.JAVA实现
+```java
+```
 ##### 5.其他
 
 #### 责任链模式
@@ -140,6 +187,8 @@ public class Singleton {
 ##### 2.什么时候使用责任链模式
 ##### 3.UML类图
 ##### 4.JAVA实现
+```java
+```
 ##### 5.其他
 
 #### 装饰模式
@@ -147,6 +196,8 @@ public class Singleton {
 ##### 2.什么时候使用装饰模式
 ##### 3.UML类图
 ##### 4.JAVA实现
+```java
+```
 ##### 5.其他
 
 #### 策略模式
@@ -154,6 +205,8 @@ public class Singleton {
 ##### 2.什么时候使用策略模式
 ##### 3.UML类图
 ##### 4.JAVA实现
+```java
+```
 ##### 5.其他
 
 #### 适配器模式
@@ -161,6 +214,8 @@ public class Singleton {
 ##### 2.什么时候使用适配器模式
 ##### 3.UML类图
 ##### 4.JAVA实现
+```java
+```
 ##### 5.其他
 
 #### 迭代器模式
@@ -168,6 +223,8 @@ public class Singleton {
 ##### 2.什么时候使用迭代器模式
 ##### 3.UML类图
 ##### 4.JAVA实现
+```java
+```
 ##### 5.其他
 
 #### 组合模式
@@ -175,6 +232,8 @@ public class Singleton {
 ##### 2.什么时候使用组合模式
 ##### 3.UML类图
 ##### 4.JAVA实现
+```java
+```
 ##### 5.其他
 
 #### 观察者模式
@@ -182,6 +241,8 @@ public class Singleton {
 ##### 2.什么时候使用观察者模式
 ##### 3.UML类图
 ##### 4.JAVA实现
+```java
+```
 ##### 5.其他
 
 #### 门面模式
@@ -189,6 +250,8 @@ public class Singleton {
 ##### 2.什么时候使用门面模式
 ##### 3.UML类图
 ##### 4.JAVA实现
+```java
+```
 ##### 5.其他
 
 #### 备忘录模式
@@ -318,6 +381,8 @@ public class Client {
 ##### 2.什么时候使用状态模式
 ##### 3.UML类图
 ##### 4.JAVA实现
+```java
+```
 ##### 5.其他
 
 #### 解释器模式
@@ -325,6 +390,8 @@ public class Client {
 ##### 2.什么时候使用解释器模式
 ##### 3.UML类图
 ##### 4.JAVA实现
+```java
+```
 ##### 5.其他
 
 #### 享元模式
@@ -332,6 +399,8 @@ public class Client {
 ##### 2.什么时候使用享元模式
 ##### 3.UML类图
 ##### 4.JAVA实现
+```java
+```
 ##### 5.其他
 
 #### 桥梁模式
@@ -339,5 +408,7 @@ public class Client {
 ##### 2.什么时候使用桥梁模式
 ##### 3.UML类图
 ##### 4.JAVA实现
+```java
+```
 ##### 5.其他
   
