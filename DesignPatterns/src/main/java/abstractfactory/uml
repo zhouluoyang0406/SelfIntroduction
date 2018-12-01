@@ -1,0 +1,30 @@
+@startuml
+class AbstractCreator {
+}
+class CreatorA {
+}
+class CreatorB {
+}
+class AbstractProductA {
+}
+class ProductAone {
+}
+class ProductAtwo {
+}
+class AbstractProductB {
+}
+class ProductBone {
+}
+class ProductBtwo {
+}
+AbstractCreator <|-- CreatorA
+AbstractCreator <|-- CreatorB
+AbstractProductA <|-- ProductAone
+AbstractProductA <|-- ProductAtwo
+AbstractProductB <|-- ProductBone
+AbstractProductB <|-- ProductBtwo
+CreatorA ..> ProductAone
+CreatorA ..> ProductBone
+CreatorB ..> ProductAtwo
+CreatorB ..> ProductBtwo
+@enduml

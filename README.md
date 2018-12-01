@@ -1,6 +1,6 @@
 | Ⅰ | Ⅱ | Ⅲ |
-| :--------: | :--------: | :--------: |
-| 语言:coffee:| 项目:computer:| 设计:bulb:|
+| :--------: | :--------: | :--------: | :--------: |:--------: |
+| 语言:coffee:| 项目:computer:| 设计:bulb:| 读后感:bulb: |源码解析:bulb:|
 ## :coffee: 语言
 ### java语法
 #### 第某章：java泛型
@@ -121,13 +121,74 @@ public class Client {
 * 符合洛必达法则，我只想知道我可以知道的；符合依赖倒置，只生产抽象；里氏替换法则，子类可以替换父类，ok！
 #### 抽象工厂模式
 ##### 1.什么是抽象工厂模式
+就是工厂模式的升级版本，普通工厂模式中工厂类是一个具体的类，而抽象工厂模式中是一个抽象的类
 ##### 2.什么时候使用抽象工厂模式
+在生产一系列相互关联的产品类的时候，比如A信号的4个车门和B型号的4个轮胎组合或者B信号的4个车门和A型号的4个轮胎这种情况
 ##### 3.UML类图
+![](http://www.plantuml.com/plantuml/png/XP1H3i8W44J_EKKlq9x0c7QyW5T0oXyjoRB43_NkJPCksHJKttd3x0nZOakSbs1Si2brqoCnMSStyfOZTI_pESYXJBK4aTJxEyKvEzPkaUBg6oe_u_SOr0_GZ874d7TStdrV9loaCDM67UlwROUUSdQWEAJx7yUUKNvy6AxwV1D00GYGEZMG6wDVvxo43G00)
 ##### 4.JAVA实现
 ```java
+public abstract class AbstractCreator {
+    public abstract AbstractProductA createProductA();
+    public abstract AbstractProductB createProductB();
+}
+public abstract class AbstractProductA {
+    public void shartMethod() {}
+    public abstract void doSomething();
+}
+public abstract class AbstractProductB {
+    public void shartMethod(){ }
+    public abstract void doSomething();
+}
+public  class CreatorA extends AbstractCreator {
+    public AbstractProductA createProductA() {
+        return new ProductAone();
+    }
+    public AbstractProductB createProductB() {
+        return new ProductBone();
+    }
+}
+public  class CreatorB  extends AbstractCreator {
+    public AbstractProductA createProductA() {
+        return new ProductAtwo();
+    }
+    public AbstractProductB createProductB() {
+        return new ProductBtwo();
+    }
+}
+public  class ProductAone extends AbstractProductA {
+    public void doSomething() {
+        System.out.printf("Aone");
+    }
+}
+public  class ProductAtwo extends AbstractProductA {
+    public void doSomething() {
+        System.out.printf("Atwo");
+    }
+}
+public  class ProductBone extends AbstractProductB {
+    public void doSomething() {
+        System.out.printf("Bone");
+    }
+}
+public  class ProductBtwo extends AbstractProductB {
+    public void doSomething() {
+        System.out.printf("Btwo");
+    }
+}
+public class Client {
+    public static void main(String[] args) {
+        AbstractCreator creatorA=new CreatorA();
+        AbstractCreator creatorB=new CreatorB();
+        AbstractProductA productA = creatorA.createProductA();
+        AbstractProductB productB = creatorA.createProductB();
+        AbstractProductA productA1 = creatorB.createProductA();
+        AbstractProductB productB1 = creatorB.createProductB();
+    }
+}
 ```
 ##### 5.其他
-
+假设一套应用有需要当个平台，在每个平台上的功能，页面都是相似的就可以定义一个抽象工厂factory(ui+feature),不同的平台工厂组装不同的ui和feature
 #### 模版方法模式
 ##### 1.什么是模版方法模式
 ##### 2.什么时候使用模版方法模式
