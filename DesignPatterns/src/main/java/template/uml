@@ -1,0 +1,14 @@
+@startuml
+class AbstractClass {
+# void doAnything()
+# void doSomething()
++ void templateMethod()
+}
+class ConcreteClassA {
+}
+class ConcreteClassB {
+}
+
+AbstractClass <|-- ConcreteClassA
+AbstractClass <|-- ConcreteClassB
+@enduml

@@ -188,38 +188,143 @@ public class Client {
 }
 ```
 ##### 5.其他
-假设一套应用有需要当个平台，在每个平台上的功能，页面都是相似的就可以定义一个抽象工厂factory(ui+feature),不同的平台工厂组装不同的ui和feature
+假设一套应用有需要几个平台，在每个平台上的功能，页面都是相似的就可以定义一个抽象工厂factory(ui+feature),不同的平台工厂组装不同的ui和feature
 #### 模版方法模式
 ##### 1.什么是模版方法模式
+在父类中定义算法结构，将具体的实现延迟到子类当中
 ##### 2.什么时候使用模版方法模式
+很多开源框架中学写了一些抽象类，如果你想扩张功能就继承这个抽象类，并实现他的protect方法，类似于这种情况的时候
 ##### 3.UML类图
+![](http://www.plantuml.com/plantuml/png/SoWkIImgAStDuKhEIImkLd1CAYufIamkSGRpghcK5ShoCrCKKl8TyofBCZBpqZKq4MB1-RcfC45jY619Qcv1Jc99gYzG8Zy5A5uBDTWvFo-vABKa5Momeq8rTWadi0GNgYjiQdHrqVGJLE74vP2QbmBq5m00)
 ##### 4.JAVA实现
 ```java
+public abstract class AbstractClass {
+    protected abstract void doAnything();
+    protected abstract void doSomething();
+    public void templateMethod() {
+        doAnything();
+        doSomething();
+    }
+}
+public  class ConcreteClassA extends AbstractClass {
+    protected void doAnything() {
+        System.out.println("any A");
+    }
+    protected void doSomething() {
+        System.out.println("some A");
+    }
+}
+public  class ConcreteClassB extends AbstractClass {
+    protected void doAnything() {
+        System.out.println("any B");
+    }
+    protected void doSomething() {
+        System.out.println("some B");
+    }
+}
+public class Client {
+    public static void main(String[] args) {
+        AbstractClass a=new ConcreteClassA();
+        AbstractClass b=new ConcreteClassB();
+        a.templateMethod();
+        b.templateMethod();
+    }
+}
 ```
 ##### 5.其他
+模版模式常常会在项目中用到，举一个我个人的例子，我有一个方法会得到一个Field对象，但是这个Field的封装方法可能有多种，但是
+格式都是getName getType getValue，在这个案例里面，getName getType getValue就是我交给子类实现的方法，getField就是模版方法
 
 #### 建造者模式
 ##### 1.什么是建造者模式
+又叫生成器模式，将一个复杂对象的创建和他的表示分离，是的使用相同的构建过程可以创建不同的表示。
 ##### 2.什么时候使用建造者模式
+工厂类关注生产产品，而见建造者模式关注生产一个类的具体细节，一个类的不同属性。
 ##### 3.UML类图
+![](http://www.plantuml.com/plantuml/png/lPAnZi8m38RtF4MaMmvLUG8GQbC6HYG6vf9QRKwXaLnN3C2xurH92ntOkCt-4lzVv3RlgK8QBauOL_MzFA3_0qFo9Z9v9BHT8urt7kVs2hPfQUvRRiKZZkl1kXgGnt_IUGDKXeJVrHixZJ4Bk6V6A0lFg0T3WSMISPAKlZC8155M_AjDVzUsimY6FB8bcxPPnMBzmiupInyj9CQoIAO5rwDAf12bjkcIcCnUgMIPBcxk39Tx_tYgHGvTpJ_M4m00)
 ##### 4.JAVA实现
 ```java
 ```
 ##### 5.其他
-
+感觉就是宝马和奥迪，两个车都是一样的属性(属性值不一样)，所有的方法都一样，这种情况下设置为两种类就不太合适
 #### 代理模式
 ##### 1.什么是代理模式
 ##### 2.什么时候使用代理模式
 ##### 3.UML类图
+![]()
 ##### 4.JAVA实现
 ```java
+public class Product {
+    public String color;
+    public String weight;
+    public String high;
+}
+public abstract class Builder {
+    protected abstract String getColor();
+    protected abstract String getWeight();
+    protected abstract String getHigh();
+    public abstract Product getProduct();
+}
+public  class ConcreteBuilderA extends Builder {
+    public String getColor() {
+        return "yellow";
+    }
+    public String getWeight() {
+        return "2t";
+    }
+    public String getHigh() {
+        return "1m";
+    }
+    public Product getProduct() {
+        Product product=new Product();
+        product.color= getColor()+"*";
+        product.weight= getWeight()+"*";//为了和A区别
+        product.high= getHigh()+"*";
+        return product;
+    }
+}
+public  class ConcreteBuilderB extends Builder {
+    public String getColor() {
+        return "red";
+    }
+    public String getWeight() {
+        return "1t";
+    }
+    public String getHigh() {
+        return "1.3m";
+    }
+    public Product getProduct(){
+        Product product=new Product();
+        product.color= getColor();
+        product.weight= getWeight();
+        product.high= getHigh();
+        return product;
+    }
+}
+public  class Director{
+    private Builder aBuilder=new ConcreteBuilderA();
+    private Builder bBuilder=new ConcreteBuilderB();
+    public Product getProjectA(){
+        return aBuilder.getProduct();
+    }
+    public Product getProjectB(){
+        return bBuilder.getProduct();
+    }
+}
+public class Client {
+    public static void main(String[] args) {
+        Director director=new Director();
+        director.getProjectA();
+        director.getProjectB();
+    }
+}
 ```
 ##### 5.其他
-
 #### 原型模式
 ##### 1.什么是原型模式
 ##### 2.什么时候使用原型模式
 ##### 3.UML类图
+![]()
 ##### 4.JAVA实现
 ```java
 ```
@@ -229,6 +334,7 @@ public class Client {
 ##### 1.什么是中介者模式
 ##### 2.什么时候使用中介者模式
 ##### 3.UML类图
+![]()
 ##### 4.JAVA实现
 ```java
 ```
@@ -238,6 +344,7 @@ public class Client {
 ##### 1.什么是命令模式
 ##### 2.什么时候使用命令模式
 ##### 3.UML类图
+![]()
 ##### 4.JAVA实现
 ```java
 ```
@@ -247,6 +354,7 @@ public class Client {
 ##### 1.什么是责任链模式
 ##### 2.什么时候使用责任链模式
 ##### 3.UML类图
+![]()
 ##### 4.JAVA实现
 ```java
 ```
@@ -256,6 +364,7 @@ public class Client {
 ##### 1.什么是装饰模式
 ##### 2.什么时候使用装饰模式
 ##### 3.UML类图
+![]()
 ##### 4.JAVA实现
 ```java
 ```
@@ -265,6 +374,7 @@ public class Client {
 ##### 1.什么是策略模式
 ##### 2.什么时候使用策略模式
 ##### 3.UML类图
+![]()
 ##### 4.JAVA实现
 ```java
 ```
@@ -274,6 +384,7 @@ public class Client {
 ##### 1.什么是适配器模式
 ##### 2.什么时候使用适配器模式
 ##### 3.UML类图
+![]()
 ##### 4.JAVA实现
 ```java
 ```
@@ -283,6 +394,7 @@ public class Client {
 ##### 1.什么是迭代器模式
 ##### 2.什么时候使用迭代器模式
 ##### 3.UML类图
+![]()
 ##### 4.JAVA实现
 ```java
 ```
@@ -292,6 +404,7 @@ public class Client {
 ##### 1.什么是组合模式
 ##### 2.什么时候使用组合模式
 ##### 3.UML类图
+![]()
 ##### 4.JAVA实现
 ```java
 ```
@@ -301,6 +414,7 @@ public class Client {
 ##### 1.什么是观察者模式
 ##### 2.什么时候使用观察者模式
 ##### 3.UML类图
+![]()
 ##### 4.JAVA实现
 ```java
 ```
@@ -310,6 +424,7 @@ public class Client {
 ##### 1.什么是门面模式
 ##### 2.什么时候使用门面模式
 ##### 3.UML类图
+![]()
 ##### 4.JAVA实现
 ```java
 ```
@@ -450,6 +565,7 @@ public class Client {
 ##### 1.什么是解释器模式
 ##### 2.什么时候使用解释器模式
 ##### 3.UML类图
+![]()
 ##### 4.JAVA实现
 ```java
 ```
@@ -459,6 +575,7 @@ public class Client {
 ##### 1.什么是享元模式
 ##### 2.什么时候使用享元模式
 ##### 3.UML类图
+![]()
 ##### 4.JAVA实现
 ```java
 ```
@@ -468,6 +585,7 @@ public class Client {
 ##### 1.什么是桥梁模式
 ##### 2.什么时候使用桥梁模式
 ##### 3.UML类图
+![]()
 ##### 4.JAVA实现
 ```java
 ```

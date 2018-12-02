@@ -1,0 +1,36 @@
+@startuml
+class Project {
++ String color
++ String weight
++ String high
+}
+class Builder {
+# String getColor()
+# String getWeight()
+# String getHigh()
++ Product getProduct()
+}
+class ConcreteBuilderA {
+# String getColor()
+# String getWeight()
+# String getHigh()
++ Product getProduct()
+}
+class ConcreteBuilderB {
+# String getColor()
+# String getWeight()
+# String getHigh()
++ Product getProduct()
+}
+class Director {
++ Builder aBuilder;
++ Builder bBuilder;
++ Project getProjectA()
++ Project getProjectB()
+}
+
+Builder --> Project
+Director o-- Builder
+Builder <|-- ConcreteBuilderA
+Builder <|-- ConcreteBuilderB
+@enduml
