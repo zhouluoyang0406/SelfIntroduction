@@ -244,16 +244,6 @@ public class Client {
 ![](http://www.plantuml.com/plantuml/png/lPAnZi8m38RtF4MaMmvLUG8GQbC6HYG6vf9QRKwXaLnN3C2xurH92ntOkCt-4lzVv3RlgK8QBauOL_MzFA3_0qFo9Z9v9BHT8urt7kVs2hPfQUvRRiKZZkl1kXgGnt_IUGDKXeJVrHixZJ4Bk6V6A0lFg0T3WSMISPAKlZC8155M_AjDVzUsimY6FB8bcxPPnMBzmiupInyj9CQoIAO5rwDAf12bjkcIcCnUgMIPBcxk39Tx_tYgHGvTpJ_M4m00)
 ##### 4.JAVA实现
 ```java
-```
-##### 5.其他
-感觉就是宝马和奥迪，两个车都是一样的属性(属性值不一样)，所有的方法都一样，这种情况下设置为两种类就不太合适
-#### 代理模式
-##### 1.什么是代理模式
-##### 2.什么时候使用代理模式
-##### 3.UML类图
-![]()
-##### 4.JAVA实现
-```java
 public class Product {
     public String color;
     public String weight;
@@ -320,6 +310,81 @@ public class Client {
 }
 ```
 ##### 5.其他
+感觉就是宝马和奥迪，两个车都是一样的属性(属性值不一样)，所有的方法都一样，这种情况下设置为两种类就不太合适
+#### 代理模式
+##### 1.什么是代理模式
+代理模式通俗点将就是中介,比如你想买一个二手车的时候，可以选择自己区二手车市场买，也可以选择一个代理人，他帮你做了选择和一些复杂的操作，你直接拿成品就可以了
+##### 2.什么时候使用代理模式
+在某些情况下，一个客户类不想或者不能直接引用一个委托对象，而代理类对象可以在客户类和委托对象之间起到中介的作用，其特征是代理类和委托类实现相同的接口
+特点是代理类和委托类实现相同的接口，并且代理类依赖委托类
+##### 3.UML类图
+![](http://www.plantuml.com/plantuml/png/SoWkIImgAStDuKhEIImkLl1qJynD3SX9h4mjKgZcqbOeoyzCKSZEpCbnoYykrj24YPGMf1SbbgG21MgX6YdN5r2KNr69q5oSMeAGqq1sLpgSgKcAJSuvcQbv9GhLG04kA5jNrmxPnrp8jjZKwEeg49H3k9pB8JKl1HYG0000)
+##### 4.JAVA实现
+```java
+interface IGamePlayer {
+    void killBoss();
+    void upgrate();
+}
+public  class GamePlayer implements IGamePlayer {
+    public void killBoss() {
+        System.out.printf("zly kill boss");
+    }
+    public void upgrate() {
+        System.out.printf("zly upgrate");
+    }
+}
+public class GamePlayerProxy implements IGamePlayer {
+    private IGamePlayer iGamePlayer;
+    public void setGamePlayer(IGamePlayer gamePlayer) {
+        this.iGamePlayer = gamePlayer;
+    }
+    public void killBoss() {
+        iGamePlayer.killBoss();
+    }
+    public void upgrate() {
+        iGamePlayer.upgrate();
+    }
+}
+public class Client {
+    public static void main(String[] args) {
+        IGamePlayer player=new GamePlayer();
+        GamePlayerProxy playProxy=new GamePlayerProxy();
+        playProxy.setGamePlayer(player);
+        playProxy.killBoss();
+        playProxy.upgrate();
+    }
+}
+public class DynamicProxyHandler implements InvocationHandler {
+    private Object object;
+    public DynamicProxyHandler(final Object object) {
+        this.object = object;
+    }
+    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+        if (method.getName() == "killBoss") {
+            System.out.println("前准备");
+            Object result = method.invoke(object, args);
+            System.out.println("后准备");
+            return result;
+        }else {
+            Object result = method.invoke(object, args);
+            return result;
+        }
+    }
+}
+public class DynamicProxyClient {
+     public static void main(String[] args) {
+         IGamePlayer gamePlayer = new GamePlayer();
+         IGamePlayer gamePlayerProxy = (IGamePlayer) Proxy.newProxyInstance(IGamePlayer.class.getClassLoader(), new
+                 Class[]{IGamePlayer.class}, new DynamicProxyHandler(gamePlayer));
+         gamePlayerProxy.killBoss();
+         gamePlayerProxy.upgrate();
+     }
+ }
+```
+##### 5.其他
+代理模式有两种形式。一种是静态代理，就是我案例中的例子。另外一种叫做动态代理,因为静态代理的功能是给现有服务的接口加上前置执行和后知执行
+基本的模式是【before()；静态接口()；after()】,静态代理缺点就是接口需要提前存在。现在把静态接口()抽象出一层，所有的接口其实都是method
+这样就变成【before()；method()；after()】这样就不需要在开始的时候就存在接口(java自带的动态代理需要实现相同接口,cglib不需要)，SpringAop或者说整个Spring都是用了动态代理的逻辑。
 #### 原型模式
 ##### 1.什么是原型模式
 ##### 2.什么时候使用原型模式

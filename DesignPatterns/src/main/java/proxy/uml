@@ -1,0 +1,21 @@
+@startuml
+class IGamePlayer {
++ void killBoss()
++ void upgrate()
+}
+class GamePlayer {
++ void killBoss()
++ void upgrate()
+}
+class GamePlayerProxy {
++ void setGamePlayer(IGamePlayer gamePlayer)
++ void killBoss()
++ void upgrate()
+}
+class Client {
+}
+
+Client --> IGamePlayer
+IGamePlayer <|-- GamePlayer
+IGamePlayer <|-- GamePlayerProxy
+@enduml
