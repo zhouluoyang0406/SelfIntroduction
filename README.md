@@ -387,13 +387,33 @@ public class DynamicProxyClient {
 这样就变成【before()；method()；after()】这样就不需要在开始的时候就存在接口(java自带的动态代理需要实现相同接口,cglib不需要)，SpringAop或者说整个Spring都是用了动态代理的逻辑。
 #### 原型模式
 ##### 1.什么是原型模式
+制定创建对象的种类，并通过拷贝这些原型创建新的对象,核心就是clone()
 ##### 2.什么时候使用原型模式
+一个对象多个修改者，可以使用原型模式，new一个对象比较繁琐的时候
 ##### 3.UML类图
-![]()
+![](http://www.plantuml.com/plantuml/png/SoWkIImgAStDuKhEIImkLWZ9oCnBLwZcqbO8BYa2CVCISrCHlCIKbABKucAWW6TUIMfwQf52OZf8sh6eAB7I9xEu18Hj88hj5F9pKa3QWSgXvYRdvEUbQcXorN8vfEQb06q50000)
 ##### 4.JAVA实现
 ```java
+public class Thing implements Cloneable {
+    String name;
+    String address;
+    Integer age;
+    ArrayList<String> oldnames;
+    @Override
+    public Thing clone(){
+        Thing thing=null;
+        try {
+            thing=(Thing)super.clone();
+            thing.oldnames=(ArrayList<String>)thing.oldnames.clone();
+        }catch (CloneNotSupportedException e){
+            e.printStackTrace();
+        }
+        return thing;
+    }
+}
 ```
 ##### 5.其他
+拷贝分为浅拷贝和深拷贝。要小心对象内部的数组和对象类型，这些都会被传递引用。
 
 #### 中介者模式
 ##### 1.什么是中介者模式

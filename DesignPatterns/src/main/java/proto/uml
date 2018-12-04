@@ -1,0 +1,9 @@
+@startuml
+class Thing {
++ String name
++ String address
++ Integer age
++ ArrayListList<String> oldnames
++ Thing clone()
+}
+@enduml
