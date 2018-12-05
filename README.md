@@ -417,13 +417,124 @@ public class Thing implements Cloneable {
 
 #### 中介者模式
 ##### 1.什么是中介者模式
+用一个中介对象封装一系列的对象的交互，使各个对象不需要相互交互，类似于网络拓扑图中的星型结构
 ##### 2.什么时候使用中介者模式
+类图中出现了蜘蛛网状结构的时候，使用中介者模式将其梳理成星型结构
 ##### 3.UML类图
-![]()
+![](http://www.plantuml.com/plantuml/png/VOv12W8n34NtFKKlq1k83BWMDruWPe8AQGj9YWlrxi88GQXac_S-UOiQY8tA2Ivg0cWP6LJpaTOxM9VyJE_qFHrwGo6ZFmWxCy5rq6mxEhM8dXyzeZUXRUs_TwzIfgBa0-TJG-1uIUXupuzLoZvxn49j7PK_)
 ##### 4.JAVA实现
 ```java
+public abstract class Mediator {
+    protected ConcreteColleagueOne concreteColleagueOne;
+    protected ConcreteColleagueTwo concreteColleagueTwo;
+    protected ConcreteColleagueThree concreteColleagueThree;
+
+    public Mediator(ConcreteColleagueOne concreteColleagueOne,ConcreteColleagueTwo concreteColleagueTwo,ConcreteColleagueThree concreteColleagueThree) {
+        this.concreteColleagueOne = concreteColleagueOne;
+        this.concreteColleagueOne.mediator=this;
+        this.concreteColleagueTwo = concreteColleagueTwo;
+        this.concreteColleagueTwo.mediator=this;
+        this.concreteColleagueThree = concreteColleagueThree;
+        this.concreteColleagueThree.mediator=this;
+    }
+    public abstract void exec(String str);
+}
+public class ConcreteMediator extends Mediator {
+    public ConcreteMediator(ConcreteColleagueOne concreteColleagueOne, ConcreteColleagueTwo concreteColleagueTwo, ConcreteColleagueThree concreteColleagueThree) {
+        super(concreteColleagueOne, concreteColleagueTwo, concreteColleagueThree);
+    }
+
+    public void exec(String str) {
+        if (str=="TwoAndThree"){
+            doTwoAndThree();
+        }
+        if (str=="OneAndTwo"){
+            doOneAndTwo();
+        }
+        if (str=="OneAndThree"){
+            doOneAndThree();
+        }
+    }
+    public void doTwoAndThree(){
+        concreteColleagueTwo.doTwo();
+        concreteColleagueThree.doThree();
+    }
+    public void doOneAndTwo(){
+        concreteColleagueOne.doOne();
+        concreteColleagueTwo.doTwo();
+    }
+    public void doOneAndThree(){
+        concreteColleagueOne.doOne();
+        concreteColleagueThree.doThree();
+    }
+}
+public abstract class Colleague {
+    public Mediator mediator;
+    public Colleague(Mediator mediator){
+        this.mediator=mediator;
+    }
+    public Colleague(){
+    }
+}
+public class ConcreteColleagueOne extends Colleague{
+    public ConcreteColleagueOne(Mediator mediator) {
+        super(mediator);
+    }
+    public ConcreteColleagueOne() {
+        super();
+    }
+    public void doWithTwoAndThree(){
+        this.mediator.exec("TwoAndThree");
+    }
+    public void doOne(){
+        System.out.println("one");
+    }
+}
+public class ConcreteColleagueThree extends Colleague {
+    public ConcreteColleagueThree(Mediator mediator) {
+        super(mediator);
+    }
+    public ConcreteColleagueThree() {
+        super();
+    }
+
+    public void doWithOneAndTwo(){
+        this.mediator.exec("OneAndTwo");
+    }
+    public void doThree(){
+        System.out.println("Three");
+    }
+}
+public class ConcreteColleagueTwo extends Colleague {
+    public ConcreteColleagueTwo(Mediator mediator) {
+        super(mediator);
+    }
+    public ConcreteColleagueTwo() {
+        super();
+    }
+
+    public void doWithOneAndThree() {
+        this.mediator.exec("OneAndThree");
+    }
+
+    public void doTwo() {
+        System.out.println("Two");
+    }
+}
+public class Client {
+    public static void main(String[] args) {
+        ConcreteColleagueOne concreteColleagueOne=new ConcreteColleagueOne();
+        ConcreteColleagueTwo concreteColleagueTwo=new ConcreteColleagueTwo();
+        ConcreteColleagueThree concreteColleagueThree=new ConcreteColleagueThree();
+        Mediator mediator=new ConcreteMediator(concreteColleagueOne,concreteColleagueTwo,concreteColleagueThree);
+        concreteColleagueOne.doWithTwoAndThree();
+        concreteColleagueTwo.doWithOneAndThree();
+        concreteColleagueThree.doWithOneAndTwo();
+    }
+}
 ```
 ##### 5.其他
+中介者很少使用接口，而且中介者可能会越来越大。适当的相互依赖是许可的。重点是中介者感知所有对象，对象中只包含一个知道所有对象的中介者
 
 #### 命令模式
 ##### 1.什么是命令模式
