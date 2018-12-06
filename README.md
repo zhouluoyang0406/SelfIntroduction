@@ -1,4 +1,4 @@
-| Ⅰ | Ⅱ | Ⅲ |
+| Ⅰ | Ⅱ | Ⅲ | Ⅳ | Ⅴ |
 | :--------: | :--------: | :--------: | :--------: |:--------: |
 | 语言:coffee:| 项目:computer:| 设计:bulb:| 读后感:bulb: |源码解析:bulb:|
 ## :coffee: 语言
@@ -538,13 +538,87 @@ public class Client {
 
 #### 命令模式
 ##### 1.什么是命令模式
+将一个请求封装成一个对象，从而让你使用不同的请求把客户端参数化，进行一些命令的日志存档和回退
 ##### 2.什么时候使用命令模式
+只要你认为是命令的地方就可以使用。
 ##### 3.UML类图
-![]()
+![](http://www.plantuml.com/plantuml/png/dT112i8m40NGVKwHfI9pWoxQL1VTUeEGZ51i9Z1DYg3UNQcr3RG4T1N2Vpzafko3vX1T9reAo1TjK3QrTqwJbNTna8DlhJpTqCI0kxru2jFflfUr9yCOSABL3rRbx1aDjWDoyg3rrHlC5xMXLQhhL1__rWqD_eeysdaZvdD-6nnfIiRYp8e7m6f5-LY9PVG2O5NEfKjNPRjRgKg-1J0DBKea6rtt0W00)
 ##### 4.JAVA实现
 ```java
+public interface ICommand {
+    void exec();
+}
+public class ConcreteCommandA implements ICommand {
+    private ReceiverA receiverA = null;
+    private ReceiverB receiverB = null;
+
+    public ConcreteCommandA(ReceiverA receiverA, ReceiverB receiverB) {
+        this.receiverA = receiverA;
+        this.receiverB = receiverB;
+    }
+
+    public void exec() {
+        this.receiverA.doA();
+        this.receiverB.doC();
+    }
+}
+public class ConcreteCommandB implements ICommand {
+
+    private ReceiverA receiverA = null;
+    private ReceiverB receiverB = null;
+
+    public ConcreteCommandB(ReceiverA receiverA, ReceiverB receiverB) {
+        this.receiverA = receiverA;
+        this.receiverB = receiverB;
+    }
+
+    public void exec() {
+        this.receiverA.doB();
+        this.receiverB.doD();
+    }
+}
+public class ReceiverA {
+    public void doA(){
+        System.out.println("A");
+    }
+    public void doB(){
+        System.out.println("B");
+    }
+}
+public class ReceiverB {
+    public void doC() {
+        System.out.println("c");
+    }
+
+    public void doD() {
+        System.out.println("d");
+    }
+}
+public class Invoker {
+    private ICommand command = null;
+    public void SetCommand(ICommand command){
+        this.command = command;
+    }
+    public void runCommand(){
+        command.exec();
+    }
+}
+public class Client {
+    public static void main(String[] args) {
+        ReceiverA receiver = new ReceiverA();
+        ReceiverB receiverB = new ReceiverB();
+        Invoker invoker = new Invoker();
+        invoker.SetCommand(new ConcreteCommandA(receiver,receiverB));
+        invoker.runCommand();
+        invoker.SetCommand(new ConcreteCommandB(receiver,receiverB));
+        invoker.runCommand();
+    }
+}
 ```
 ##### 5.其他
+这个逻辑有点复杂，我给大家捋一捋。Command是封装的具体请求，Receiver是具体干活的人，Invoker是执行Command的对象。
+第一：假设只有Receiver，那用户掉用的时候就是receiverA.doA();receiverB.doC();细节太多，如何交互复杂可能会有遗漏，所以将两个步骤封装在一起
+第二：Invoker存在的意义在哪里，我直接调用ConcreteCommandA.exec()不是更好？上面说过，命令模式可以提供回退和记录的功能就可以在这个里面做
 
 #### 责任链模式
 ##### 1.什么是责任链模式

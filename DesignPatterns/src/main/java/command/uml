@@ -1,0 +1,34 @@
+@startuml
+interface ICommand {
++ void Execute()
+}
+class ConcreteCommandA {
++ void Execute()
+}
+class ConcreteCommandB {
++ void Execute()
+}
+class ReceiverA {
++ void doA()
++ void doB()
+}
+class ReceiverB {
++ void doC()
++ void doD()
+}
+class ReceiverB {
++ void doC()
++ void doD()
+}
+class Invoker {
++ ICommand command
++ void runCommand()
+}
+ICommand <|-- ConcreteCommandA
+ICommand <|-- ConcreteCommandB
+ReceiverA <--ConcreteCommandA
+ReceiverA <--ConcreteCommandB
+ReceiverB <--ConcreteCommandA
+ReceiverB <--ConcreteCommandB
+ICommand <--Invoker
+@enduml
