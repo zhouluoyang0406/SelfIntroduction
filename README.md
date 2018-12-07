@@ -622,14 +622,95 @@ public class Client {
 
 #### 责任链模式
 ##### 1.什么是责任链模式
+使多个对象都有机会处理请求，从而避免请求的发送者和接受者之间的耦合关系， 将这个对象连成一条链，并沿着这条链传递该请求，直到有一个对象处理他为止
 ##### 2.什么时候使用责任链模式
+方法调用可以分为请求方和调用方，调用方会有多个对象有机会处理这个请求时候，可以使用责任链模式
 ##### 3.UML类图
-![]()
+![](http://www.plantuml.com/plantuml/png/SoWkIImgAStDuKfCAYufIamkKKZEIImkLd24SZqIyr9oKeiKghcq5ShoCrCKN2jIaqjBKZKqkMgv84hTCekAYL4Nd9gSdvT2XCAWrCBIrEAIQg00kZDiQdHrKIp4gW9g5KubkhfeGbnGAnLizFJGfHnIyrA00GG0)
 ##### 4.JAVA实现
 ```java
+public class Request {
+    private int level;
+    private String message;
+    public int getLevel() {
+        return level;
+    }
+    public void setLevel(int level) {
+        this.level = level;
+    }
+    public String getMessage() {
+        return message;
+    }
+    public void setMessage(String message) {
+        this.message = message;
+    }
+}
+public abstract class AbstractHandler {
+    private AbstractHandler nextHandler;
+
+    public void setNextHandler(AbstractHandler nextHandler) {
+        this.nextHandler = nextHandler;
+    }
+
+    public void exec(Request request) {
+        if (request.getLevel() == getLevel()) {
+            doSomething(request);
+        } else if (nextHandler == null) {
+            System.out.println("end"+request.getMessage());
+        } else {
+            nextHandler.exec(request);
+        }
+    }
+
+    protected abstract int getLevel();
+
+    protected abstract int doSomething(Request request);
+}
+public class FirstHandler extends AbstractHandler{
+    protected int getLevel() {
+        return 1;
+    }
+
+    protected int doSomething(Request request) {
+        System.out.println("level 1"+request.getMessage());
+        return 0;
+    }
+}
+public class SecondHandler extends AbstractHandler {
+    protected int getLevel() {
+        return 2;
+    }
+
+    protected int doSomething(Request request) {
+        System.out.println("level 2"+request.getMessage());
+        return 0;
+    }
+}
+public class Client {
+    public static void main(String[] args) {
+        FirstHandler firstHandler=new FirstHandler();
+        SecondHandler secondHandler=new SecondHandler();
+        firstHandler.setNextHandler(secondHandler);
+        Request request=new Request();
+        request.setLevel(1);
+        request.setMessage("让 1 来处理我 HaHaHa");
+        Request request2=new Request();
+        request2.setLevel(2);
+        request2.setMessage("让 2 来处理我 hehehe");
+        Request request3=new Request();
+        request3.setLevel(3);
+        request3.setMessage("没有人 来处理我 wuwuwu");
+        firstHandler.exec(request);
+        firstHandler.exec(request2);
+        firstHandler.exec(request3);
+    }
+}
 ```
 ##### 5.其他
-
+除了这种可以找到处理者处理后就马上的责任链模式，大家见到更多多应该是servlet中的过滤链，需要走所有的流程。
+当然除了这种第一个节点可以知道第二个节点的责任链实现方式，还有一个用list封装所有节点的格式，dubbo使用前者，servlet使用后者。
+第三种Mybatis的插件使用和dubbo逻辑类似，不过使用了动态代理的方法,在执行一个Executor方法的时候，跑了一遍动态代理里面的责任链
+参考文档[责任链模式实现的三种方式](https://www.cnblogs.com/lizo/p/7503862.html "SeayXu")
 #### 装饰模式
 ##### 1.什么是装饰模式
 ##### 2.什么时候使用装饰模式

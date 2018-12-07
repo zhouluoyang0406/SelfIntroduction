@@ -1,0 +1,17 @@
+@startuml
+abstract class AbstractHandler {
++ void Execute()
+}
+class FirstHandler {
++ void Execute()
+}
+class SecondHandler {
++ void Execute()
+}
+class Request{
+}
+AbstractHandler <|-- FirstHandler
+AbstractHandler <|-- SecondHandler
+AbstractHandler <--AbstractHandler
+Request <..AbstractHandler
+@enduml
