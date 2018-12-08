@@ -707,20 +707,63 @@ public class Client {
 }
 ```
 ##### 5.其他
-除了这种可以找到处理者处理后就马上的责任链模式，大家见到更多多应该是servlet中的过滤链，需要走所有的流程。
+除了这种可以找到处理者处理后就马上的责任链模式，大家见到更多了解应该是servlet中的过滤链，需要走所有的流程。
 当然除了这种第一个节点可以知道第二个节点的责任链实现方式，还有一个用list封装所有节点的格式，dubbo使用前者，servlet使用后者。
 第三种Mybatis的插件使用和dubbo逻辑类似，不过使用了动态代理的方法,在执行一个Executor方法的时候，跑了一遍动态代理里面的责任链  
 参考文档:
 [责任链模式实现的三种方式](https://www.cnblogs.com/lizo/p/7503862.html)
 #### 装饰模式
 ##### 1.什么是装饰模式
+动态的给一个对象添加一些额外的职责。
 ##### 2.什么时候使用装饰模式
+需要扩展一个类的功能的时候，可以使用装饰模式
 ##### 3.UML类图
-![]()
+![](http://www.plantuml.com/plantuml/png/ROz12i9034NtEKMMYimDN1Jq8Z6DK6YJaebkrBiR5SPYtGNUUn_IrI2FopJ2e25-9XOys3IRYWRUO8TN6tgqMPn2Dbju08zKQqhABXIoi1FIgOOJ1twiex1bQ9vmLJRuOj-P_RsKF_E_HgkXNM-mdb-MfTYYx4Jx_Fq9)
 ##### 4.JAVA实现
 ```java
+public interface Component {
+    void operate();
+}
+public class ConcreateComponent implements  Component{
+    public void operate() {
+        System.out.println("我是底层哦");
+    }
+}
+public abstract class Decorator implements Component {
+    private Component component;
+
+    public Decorator(Component component) {
+        this.component = component;
+    }
+
+    public void operate() {
+        this.component.operate();
+    }
+}
+public class ConcreateDecorator extends Decorator {
+    public ConcreateDecorator(Component component) {
+        super(component);
+    }
+    private void doSome(){
+        System.out.println("decorator do");
+    }
+
+    @Override
+    public void operate() {
+        doSome();
+        super.operate();
+    }
+}
+public class Client {
+    public static void main(String[] args) {
+        Component component=new ConcreateDecorator(new ConcreateComponent());
+        component.operate();
+    }
+}
 ```
 ##### 5.其他
+装饰模式是十分常见的模式，比如java中的InputStream系列，就是装饰模式的代表。装饰者是对继承的有力补充，写一个继承类，往往以为者
+基类更难修改了。
 
 #### 策略模式
 ##### 1.什么是策略模式
