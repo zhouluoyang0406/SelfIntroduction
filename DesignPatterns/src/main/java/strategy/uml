@@ -1,0 +1,13 @@
+@startuml
+class Strategy {
++ void dosomething()
+}
+class ConcreteStrategy {
+}
+class Context {
++ Strategy strategy
+}
+
+Context o--> Strategy
+Strategy <|-- ConcreteStrategy
+@enduml

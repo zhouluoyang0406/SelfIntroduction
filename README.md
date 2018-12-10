@@ -477,6 +477,7 @@ public abstract class Colleague {
     }
 }
 public class ConcreteColleagueOne extends Colleague{
+    
     public ConcreteColleagueOne(Mediator mediator) {
         super(mediator);
     }
@@ -765,15 +766,46 @@ public class Client {
 装饰模式是十分常见的模式，比如java中的InputStream系列，就是装饰模式的代表。装饰者是对继承的有力补充，写一个继承类，往往以为者
 基类更难修改了。
 
-#### 策略模式
+#### 策略模式   
 ##### 1.什么是策略模式
+定义一组算法，将每一个算法都封装起来
 ##### 2.什么时候使用策略模式
+1.多个类只有在算法或行为上稍有不同的场景
+2.算法需要自由切换的场景
+3.需要屏蔽算法规则的场景
 ##### 3.UML类图
-![]()
+![](http://www.plantuml.com/plantuml/png/SoWkIImgAStDuKhEIImkLWWkAKeiIKslLAZcqbOeoyzCKKZ9ByxFJIt9oCnBrz3ageMgSyxFIovABKb5g4UMAacjA06BSC4u-RgwTd33kU2wR6fqTJ7Cud98pKi1EWa0)
 ##### 4.JAVA实现
 ```java
+public interface Strategy {
+    void dosomething();
+}
+public  class ConcreteStrategy implements Strategy {
+    public void dosomething() {
+        System.out.println("dosomething");
+    }
+}
+public class Context {
+    private Strategy strategy;
+    public void setStrategy(Strategy strategy) {
+        this.strategy = strategy;
+    }
+    public void doAnyThing() {
+        this.strategy.dosomething();
+    }
+}
+public class Client {
+    public static void main(String[] args) {
+        Strategy strategy=new ConcreteStrategy();
+        Context context=new Context();
+        context.setStrategy(strategy);
+        context.doAnyThing();
+    }
+}
 ```
 ##### 5.其他
+1.策略模式的类图和代理模式的非常相似，只是包装类上不需要实现接口
+2.在《重构》中说遇到很多if else 和 switch的时候，可以使用策略模式。
 
 #### 适配器模式
 ##### 1.什么是适配器模式
