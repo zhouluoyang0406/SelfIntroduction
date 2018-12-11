@@ -1,0 +1,17 @@
+@startuml
+interface Target {
++ void dosomething()
+}
+class ConcreteTarget {
++ void dosomething()
+}
+class Adaptee {
++ void doOtherthing()
+}
+class Adapter {
+}
+
+Target<|--ConcreteTarget
+Adaptee <|-- Adapter
+Target <|-- Adapter
+@enduml

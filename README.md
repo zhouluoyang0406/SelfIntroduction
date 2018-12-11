@@ -809,13 +809,42 @@ public class Client {
 
 #### 适配器模式
 ##### 1.什么是适配器模式
+将一个类的接口变成客户端所期待的另外一种接口，从而使原本因接口不匹配而无法在一起工作的两个类能够在一起工作
 ##### 2.什么时候使用适配器模式
+有动机修改一个已经投产中的接口时，就使用适配器模式
 ##### 3.UML类图
-![]()
+![](http://www.plantuml.com/plantuml/png/SoWkIImgAStDuShCAqajIajCJbK8IInAJorHgERILYZBpqnHICalpizDBSd8p4lNqEIgvKhEIImkLd3EpqikIYr99KwrOqfYGKbgAh8o_vACr2BiweeKge4YN12ZRMfqTL4juuAP1fA2QO6gHXLpICrB0NeE0000)
 ##### 4.JAVA实现
 ```java
+public interface Target {
+    void dosomething();
+}
+public class ConcreteTarget implements Target {
+    public void dosomething() {
+        System.out.println("do some");
+    }
+}
+public class Adaptee {
+    public void doOtherthing(){
+        System.out.println("do other");
+    }
+}
+public class Adapter extends Adaptee implements Target {
+    public void dosomething() {
+        super.doOtherthing();
+    }
+}
+public class Client {
+    public static void main(String[] args) {
+        Target target=new ConcreteTarget();
+        target.dosomething();
+        Target target1=new Adapter();
+        target1.dosomething();
+    }
+}
 ```
 ##### 5.其他
+如果本地接口只有一个，而需要适配的外部接口有三个。这个时候就不能使用继承，因为java是单继承的。所以可以使用关联的方法，适配器里包含多个外部类。
 
 #### 迭代器模式
 ##### 1.什么是迭代器模式
