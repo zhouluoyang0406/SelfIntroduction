@@ -848,13 +848,66 @@ public class Client {
 
 #### 迭代器模式
 ##### 1.什么是迭代器模式
+提供一种方法访问一个容器对象中各个元素，而又不把暴露对象的内部细节的设计模式
 ##### 2.什么时候使用迭代器模式
+现在的高级语言基本已经实现了迭代器模式，尽量不要使用。
 ##### 3.UML类图
-![]()
+![](http://www.plantuml.com/plantuml/png/ROz1he8m443tSufPQWoSW1YCApTwXg4TaP_I9kr0J9IxQuq2oVnTftrzhwsJK9IXTz1vuNWbmtXesyWj2UC3TZY6pY9Pkzd-XiXz6FapduGZIOZOVHVltGcCevJm6Bo9BBpMJKjckPihb-QFZQ3dk_mRQa9mJ1vlbCwPqPcLRWAOezMpADHBO8RpiLA0SfRbNlz7OrMMAQncRuVUlG00)
 ##### 4.JAVA实现
 ```java
+public interface Aggregate {
+    void add(Object object);
+    void remove(Object object);
+    Iterator iterator();
+}
+public class ConcreteAggregate implements Aggregate {
+    private Vector vector=new Vector();
+    public void add(Object object) {
+        vector.add(object);
+    }
+
+    public void remove(Object object) {
+        vector.remove(object);
+    }
+
+    public Iterator iterator() {
+        return null;
+    }
+}
+public class ConcreteIterator implements  Iterator {
+    private Vector vector;
+    public int cursor=0;
+
+    public ConcreteIterator(Vector vector) {
+        this.vector = vector;
+    }
+
+    public Object next() {
+        Object result=null;
+        if (this.hasNext()){
+            result =this.vector.get(cursor++);
+        }
+        return result;
+    }
+
+    public void remove() {
+        this.vector.remove(this.next());
+    }
+
+    public boolean hasNext() {
+        return !(cursor==vector.size());
+    }
+}
+public interface Iterator {
+    Object next();
+
+    void remove();
+
+    boolean hasNext();
+}
 ```
 ##### 5.其他
+通常并不会使用迭代器模式。但在java中使用迭代器模式，和foreach这种形式的迭代的时候，要注意考虑是否支持在迭代过程中进行删除动作！！！
 
 #### 组合模式
 ##### 1.什么是组合模式

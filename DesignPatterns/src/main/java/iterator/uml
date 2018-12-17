@@ -1,0 +1,21 @@
+@startuml
+interface Aggregate {
++ void add()
++ void remove()
++ iterator iterator()
+}
+class ConcreteAggregate {
+}
+interface iterator {
++ Object next()
++ void remove()
++ boolean hasNext()
+}
+class ConcreteIterator {
+}
+
+Aggregate<|--ConcreteAggregate
+iterator <|-- ConcreteIterator
+ConcreteIterator ..> ConcreteAggregate
+ConcreteIterator <-- ConcreteAggregate
+@enduml
