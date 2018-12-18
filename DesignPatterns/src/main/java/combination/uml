@@ -1,0 +1,17 @@
+@startuml
+abstract class Component {
++ void dosomething()
+}
+class Composite {
++ void add(Component component)
++ void remove(Component component)
++ List<Component> getChildren(Component component)
+}
+
+class Leaf {
+}
+
+Component<|--Composite
+Component <|-- Leaf
+Component <--o Composite
+@enduml

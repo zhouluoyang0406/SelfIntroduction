@@ -911,13 +911,40 @@ public interface Iterator {
 
 #### 组合模式
 ##### 1.什么是组合模式
+将对象组合成树形结构以表示部分-整体的层次结构
 ##### 2.什么时候使用组合模式
+1.维护和展示部分-整体关系的场景，如树形菜单，文件和文件夹管理
+2.从一个整体中能够独立出部分模块的或功能的场景
 ##### 3.UML类图
-![]()
+![](http://www.plantuml.com/plantuml/png/TOv1heCm34JtFeMNe2etG1KIMowHJro8bCHLRDXGxbvH5SAYVsVFl2TDAsgppZ60_HFDTb0SWXN1ZkEJ4oN55Mwui7VeM3YIJZwDLGqRN43nIWMqpbN57uwhFlfCaHVw3-czQ7DsTnn9kya7bodzLZRuJkd9Fd3TVpZ1vcNCER74kESVuPePmrZWbfAROtW3)
 ##### 4.JAVA实现
 ```java
+public abstract class Component {
+    public void dosomething(){
+        System.out.println("dothing");
+    }
+}
+public  class Composite extends Component{
+    private List<Component> componentArrayList=new ArrayList<Component>();
+    public void add(Component component){
+        componentArrayList.add(component);
+    }
+    public void remove(Component component){
+        componentArrayList.remove(component);
+
+    }
+    public List<Component> getChildren(){
+        return componentArrayList;
+    }
+}
+public  class Leaf extends Component {
+    public void dosomething(){
+        System.out.println("lead dothing");
+    }
+}
 ```
 ##### 5.其他
+组合模式从上到下遍历非常方便，如果想要从下到上遍历，需要在组件类里面添加setParent方法
 
 #### 观察者模式
 ##### 1.什么是观察者模式
