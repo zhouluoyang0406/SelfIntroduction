@@ -948,13 +948,61 @@ public  class Leaf extends Component {
 
 #### 观察者模式
 ##### 1.什么是观察者模式
+又叫发布订阅模式。定义对象间一对多的依赖关系，使得一个对象改变状态，则所有依赖它的对象都会得到通知，并被自动更新
 ##### 2.什么时候使用观察者模式
+关联行为场景。事件多级触发场景。跨系统的消息交互场景。
 ##### 3.UML类图
-![]()
+![](http://www.plantuml.com/plantuml/png/bOvDIWGn48NtTOfQJYFf4pJ3W0VeXU8-FpMQ8PsILAL57E-kE1O3qWekyzwNLzz1r3VjIm4VH9kFYh5u4RphuKIVhpTm-41HkKrp46ehjJroa4i6DxXoJkXJcYtR6OSyM9-e_DbNrdnyjK9s0xp3nUEMQsoaTFMnIHPUI9zoVVp28LUbTlIHq7QkS7zENcbZrj2vqZ_e-nVUfE7RSZexzqCSxEzq7iUDwx_rTi-cdTjR2WUggI_b0m00)
 ##### 4.JAVA实现
 ```java
+public abstract class Subject {
+    private Vector<Observer> obsVector=new Vector<Observer>();
+
+    public void addObsVector(Observer o) {
+        obsVector.add(o);
+    }
+
+    public void delObsVector(Observer o) {
+        obsVector.remove(o);
+    }
+
+    public void notifyObservers() {
+        for (Observer observer : obsVector) {
+            observer.update();
+        }
+    }
+}
+public interface Observer {
+    void update();
+}
+public class ConcreteSubject extends Subject {
+    public void dosome(){
+        System.out.println("dosome");
+        notifyObservers();
+    }
+}
+public class ConcreteObserverTwo implements Observer {
+    public void update() {
+        System.out.println("observer two");
+    }
+}
+public class ConcreteObserverOne implements Observer {
+    public void update() {
+        System.out.println("observer one");
+    }
+}
+public class Client {
+    public static void main(String[] args) {
+        Subject subject=new ConcreteSubject();
+        subject.addObsVector(new ConcreteObserverOne());
+        subject.addObsVector(new ConcreteObserverTwo());
+        ((ConcreteSubject) subject).dosome();
+    }
+}
 ```
 ##### 5.其他
+每个对象都可以是观察者和被观察者，所有需要注意循环触发，如A-B-C-A。java自带支持观察者模式Observer对象是观察者，Observable对象是被观察者。
+
 
 #### 门面模式
 ##### 1.什么是门面模式
