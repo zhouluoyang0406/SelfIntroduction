@@ -1003,16 +1003,50 @@ public class Client {
 ##### 5.其他
 每个对象都可以是观察者和被观察者，所有需要注意循环触发，如A-B-C-A。java自带支持观察者模式Observer对象是观察者，Observable对象是被观察者。
 
-
 #### 门面模式
 ##### 1.什么是门面模式
+要求一个子系统的外部吧与其内部的通讯必须通过一个统一的对象进行。
 ##### 2.什么时候使用门面模式
+为一个复杂的模块，或者子系统提供一个供外接访问的接口。子系统相对独立。预防低水平人员带来的风险扩散。
+
 ##### 3.UML类图
-![]()
+![](http://www.plantuml.com/plantuml/png/SoWkIImgAStDuKhEIImkLl3DJodDIVNFIrMevj9MAClFJ558oI_EpqqjoSZCIzVGvAf5KHXIda-ameoYL3ncSa4LkoKc9wQ0rEaYN09amoq3iH7cmKm3cPIV0bIgeOag1DI1BWJM2B4JOfckhXtSAeGGt4Q44BB53gbvAS100m00)
 ##### 4.JAVA实现
 ```java
+public class ModuleOne {
+    public void doSomeThing(){
+        System.out.println("One");
+    }
+}
+public class ModuleTwo {
+    public void doSomeThing(){
+        System.out.println("Two");
+    }
+}
+public class ModuleThree {
+    public void doSomeThing(){
+        System.out.println("Two");
+    }
+}
+public class Facade {
+    private ModuleOne moduleOne=new ModuleOne();
+    private ModuleTwo moduleTwo=new ModuleTwo();
+    private ModuleThree moduleThree=new ModuleThree();
+    public void methodOne(){moduleOne.doSomeThing();}
+    public void methodTwo(){moduleTwo.doSomeThing();}
+    public void methodThree(){moduleThree.doSomeThing();}
+}
+public class Client {
+    public static void main(String[] args) {
+        Facade facade=new Facade();
+        facade.methodOne();
+        facade.methodTwo();
+        facade.methodThree();
+    }
+}
 ```
 ##### 5.其他
+不要在门面中做业务逻辑。门面只是提供路径。千万别让子系统依赖门面做逻辑。
 
 #### 备忘录模式
 ##### 1.什么是备忘录模式

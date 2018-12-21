@@ -1,0 +1,25 @@
+@startuml
+class ModuleOne {
++ void dosomething()
+}
+class ModuleTwo {
++ void dosomething()
+}
+class ModuleThree {
++ void dosomething()
+}
+
+
+class Facade {
+- ModuleOne
+- ModuleTwo
+- ModuleThree
++ void methodOne()
++ void methodTwo()
++ void methodThree()
+}
+
+Facade-->ModuleOne
+Facade-->ModuleTwo
+Facade-->ModuleThree
+@enduml
