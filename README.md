@@ -1172,20 +1172,153 @@ public class Client {
 
 #### 状态模式
 ##### 1.什么是状态模式
+当一个对象内在状态改变的时候，改变它的行为，看起来像改变了类
 ##### 2.什么时候使用状态模式
+行为随状态改变而改变的场景。条件和分支判断语句的替代者
 ##### 3.UML类图
+![](http://www.plantuml.com/plantuml/png/fOz12i8m44NtEKMM5SaDH0hT2e8zG8bjb4AQbCn41FNk1jf9ecRdgfrvFvzvDQ1qw2VDv1dGoHvvhoK0FumNR56YuWycU6CDgdjWovTj--4c_0G00)
 ##### 4.JAVA实现
 ```java
+public class Context {
+    public static final ClosingState closingState=new ClosingState();
+    public static final OpenningState openningState=new OpenningState();
+    public static final StopingState stopingState=new StopingState();
+    public static final RunningState runningState=new RunningState();
+
+    private LiftState liftState;
+    public void setLiftState(LiftState liftState) {
+        this.liftState = liftState;
+        this.liftState.setContext(this);
+    }
+
+    public LiftState getLiftState() {
+        return liftState;
+    }
+
+    public void open() {
+        liftState.open();
+    }
+
+    public void close() {
+        liftState.close();
+
+    }
+
+    public void run() {
+        liftState.run();
+    }
+
+    public void stop() {
+        liftState.stop();
+    }
+}
+public class ClosingState extends LiftState {
+    public void open() {
+        super.context.setLiftState(Context.openningState);
+        super.context.getLiftState().open();
+    }
+
+    public void close() {
+        System.out.println("close");
+    }
+
+    public void run() {
+        super.context.setLiftState(Context.runningState);
+        super.context.getLiftState().run();
+    }
+
+    public void stop() {
+        super.context.setLiftState(Context.stopingState);
+        super.context.getLiftState().stop();
+    }
+}
+public class OpenningState extends LiftState {
+    public void open() {
+        System.out.println("open");
+    }
+
+    public void close() {
+        super.context.setLiftState(Context.closingState);
+        super.context.getLiftState().close();
+    }
+
+    public void run() {
+
+    }
+
+    public void stop() {
+        super.context.setLiftState(Context.stopingState);
+        super.context.getLiftState().stop();
+    }
+}
+public class RunningState extends LiftState {
+    public void open() {
+
+    }
+
+    public void close() {
+
+    }
+
+    public void run() {
+        System.out.println("run");
+    }
+
+    public void stop() {
+        super.context.setLiftState(Context.stopingState);
+        super.context.getLiftState().stop();
+    }
+}
+public class StopingState extends LiftState {
+    public void open() {
+        super.context.setLiftState(Context.openningState);
+        super.context.getLiftState().open();
+    }
+
+    public void close() {
+
+    }
+
+    public void run() {
+        super.context.setLiftState(Context.runningState);
+        super.context.getLiftState().run();
+    }
+
+    public void stop() {
+        System.out.println("stop");
+    }
+}
+public abstract class LiftState {
+    protected Context context;
+    public abstract void open();
+    public abstract void close();
+    public abstract void run();
+    public abstract void stop();
+    public void setContext(Context context) {
+        this.context = context;
+    }
+}
+public class Client {
+    public static void main(String[] args) {
+        Context context=new Context();
+        context.setLiftState(Context.closingState);
+        context.open();
+        context.close();
+        context.run();
+        context.stop();
+    }
+}
 ```
 ##### 5.其他
-
+第一点:状态模式的主要逻辑是，Context包含状态，所有的方法，又状态进行执行，而且每一种状态又包含Context，可以切换到下一个状态。如果没有切换的逻辑，就不需要State包含Context
+第二点:上面的例子不是通用的uml图，是一个具体的例子。状态模式和策略模式都是减少if..else这类语句的利器。详见《重构》。
 #### 解释器模式
 ##### 1.什么是解释器模式
 ##### 2.什么时候使用解释器模式
 ##### 3.UML类图
-![]()
 ##### 4.JAVA实现
 ```java
+
 ```
 ##### 5.其他
 

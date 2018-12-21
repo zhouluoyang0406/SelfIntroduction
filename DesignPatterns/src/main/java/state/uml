@@ -1,0 +1,31 @@
+@startuml
+abstract class LiftState {
+- Context context
++ void setContext(Context _context)
++ void open()
++ void close()
++ void run()
++ void stop()
+}
+class OpenningState {
+}
+class ClosingState {
+}
+class RunningState {
+}
+class StopingState {
+}
+class Context {
+- LiftState liftState
++ void setLiftState(LiftState _liftState)
++ void open()
++ void close()
++ void run()
++ void stop()
+}
+LiftState <|-- OpenningState
+LiftState <|-- ClosingState
+LiftState <|-- RunningState
+LiftState <|-- StopingState
+Context o--> LiftState
+@enduml
