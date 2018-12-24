@@ -1,0 +1,27 @@
+@startuml
+abstract class Expression {
++ int interpreter(HashMap<String,Integer> var)
+}
+class VarExpression {
+- String key
++ int interpreter(HashMap<String,Integer> var)
+}
+abstract class SymbolExpression {
+- Expression left
+- Expression right
++ int interpreter(HashMap<String,Integer> var)
+}
+class AddExpression {
+}
+class SubExpression {
+}
+class Calculator{
+- Expression expression
++ int run(HashMap<String,Integer> var)
+}
+VarExpression --|> Expression
+SymbolExpression --|> Expression
+SymbolExpression <|-- AddExpression
+SymbolExpression <|-- SubExpression
+Calculator o--> Expression
+@enduml

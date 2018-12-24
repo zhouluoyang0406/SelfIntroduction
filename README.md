@@ -1314,13 +1314,90 @@ public class Client {
 第二点:上面的例子不是通用的uml图，是一个具体的例子。状态模式和策略模式都是减少if..else这类语句的利器。详见《重构》。
 #### 解释器模式
 ##### 1.什么是解释器模式
+给定一门语言，定义它的文法的一种表示，并定义一个解释器，该解释器使用该表示来解释语言中的句子
 ##### 2.什么时候使用解释器模式
+重复发生的问题，可以使用解释器模式。一个语法需要解释的场景。
 ##### 3.UML类图
+![](http://www.plantuml.com/plantuml/png/dP31Ii0m44Jl-OezAfe_AAKYWXuy5RnlsxKDfadPRCHY_NShbTe4eUWX8Hc6jpDR1K6ME5g5JH36Lg2r60BSlKrC8HZlu5rTWN7oTOXNTRqlxZ4CZpWLjR1n_VM34-g9ItX5lbGVQcCy8ISO3PiTNcZ-CpCFMCzZust6FtmjFKkgiEa7-M-NcwuxpjhrEZQ_whTessXHF6UvQ7z-H-7epYAaYzHwAGz4bM_Yt50iMc-DJZn9E_NJ2RpMoOYAN1T7-ma0)
 ##### 4.JAVA实现
 ```java
+public abstract class Expression {
+  abstract int interpreter(HashMap<String,Integer> var);
+}
+public abstract class SymbolExpression extends Expression {
+    protected Expression left;
+    protected Expression right;
 
+    public SymbolExpression(Expression left, Expression right) {
+        this.left = left;
+        this.right = right;
+    }
+}
+public class SubExpression extends SymbolExpression {
+
+    public SubExpression(Expression left, Expression right) {
+        super(left, right);
+    }
+
+    int interpreter(HashMap<String, Integer> var) {
+        return super.left.interpreter(var)-super.right.interpreter(var);
+    }
+}
+public class AddExpression extends SymbolExpression {
+
+    public AddExpression(Expression left, Expression right) {
+        super(left, right);
+    }
+
+    int interpreter(HashMap<String, Integer> var) {
+        return super.left.interpreter(var)+super.right.interpreter(var);
+    }
+}
+public class Calculator {
+    private Expression expression;
+
+    public Calculator(String expression) {
+        Stack<Expression> stack = new Stack<Expression>();
+        char[] chars = expression.toCharArray();
+        Expression left = null;
+        Expression right = null;
+        for (int i = 0; i < chars.length; i++) {
+            switch (chars[i]) {
+                case '+':
+                    left = stack.pop();
+                    right = new VarExpression(String.valueOf(chars[++i]));
+                    stack.push(new AddExpression(left, right));
+                    break;
+                case '-':
+                    left = stack.pop();
+                    right = new VarExpression(String.valueOf(chars[++i]));
+                    stack.push(new SubExpression(left, right));
+                    break;
+                default:
+                    stack.push(new VarExpression(String.valueOf(chars[i])));
+            }
+        }
+        this.expression=stack.pop();
+    }
+    public int run(HashMap<String, Integer> var){
+        return this.expression.interpreter(var);
+    }
+}
+public class Client {
+    public static void main(String[] args) {
+        String ex="a+b-c";
+        HashMap<String,Integer> var=new HashMap<String, Integer>();
+        var.put("a",3);
+        var.put("b",4);
+        var.put("c",1);
+        Calculator cal=new Calculator(ex);
+        System.out.println(cal.run(var));
+
+    }
+}
 ```
 ##### 5.其他
+解释器在项目中非常少用，因为已经又很多的解析器工具了。上面的例子并不适应所有的情况。
 
 #### 享元模式
 ##### 1.什么是享元模式
