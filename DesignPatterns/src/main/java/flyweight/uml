@@ -1,0 +1,14 @@
+@startuml
+abstract class Flyweight{
++ void operate()
+}
+ class ConcreteFlyweightOne{
+}
+ class ConcreteFlyweightTwo{
+}
+ class FlyweightFactory{
+}
+ConcreteFlyweightOne --|> Flyweight
+ConcreteFlyweightTwo --|> Flyweight
+Flyweight <--o FlyweightFactory
+@enduml

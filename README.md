@@ -1401,14 +1401,68 @@ public class Client {
 
 #### 享元模式
 ##### 1.什么是享元模式
+池技术的重要实现模式。使用共享对象可以有效地支持大量的细粒度。
 ##### 2.什么时候使用享元模式
+系统中存在大量的相似对象。
+细粒度的对象都具有较为相似的外部状态，而且内部吧状态与环境无关
+需要缓冲池
 ##### 3.UML类图
-![]()
+![](http://www.plantuml.com/plantuml/png/SoWkIImgAStDuKfCAYufIamkKKZEIImkLd3BgInFpKpFAAdcqbOeoyzCKSWlI2rAB4dLqEIgvO8gSixFIovABKc5A_RFIwt68nrIdeya3HTs0rgRNrG9ai9ceeAkReqTGZKNDcFHrS1P2ZQwklaOLd5nEQJcfG2z3G00)
 ##### 4.JAVA实现
 ```java
+public abstract class Flyweight {
+
+
+    private String intrinsic;
+    protected final String extrinsic;
+
+    protected Flyweight(String extrinsic) {
+        this.extrinsic = extrinsic;
+    }
+    public abstract void operate();
+    public String getIntrinsic() {
+        return intrinsic;
+    }
+    public void setIntrinsic(String intrinsic) {
+        this.intrinsic = intrinsic;
+    }
+}
+public class ConcreteFlyweightOne extends Flyweight {
+    public ConcreteFlyweightOne(String extrinsic) {
+        super(extrinsic);
+    }
+
+    public void operate() {
+        System.out.println("one");
+    }
+}
+public class ConcreteFlyweightTwo extends Flyweight {
+    public ConcreteFlyweightTwo(String extrinsic) {
+        super(extrinsic);
+    }
+
+    public void operate() {
+        System.out.println("two");
+    }
+}
+public class FlyweightFactory {
+    private static HashMap<String,Flyweight> pool=new HashMap<String, Flyweight>();
+    public static Flyweight getFlyweight(String key){
+        if (pool.containsKey(key)){
+            return pool.get(key);
+        }else {
+            ConcreteFlyweightOne flyweightOne = new ConcreteFlyweightOne("key");
+            pool.put(key,flyweightOne);
+            return flyweightOne;
+        }
+    }
+}
 ```
 ##### 5.其他
-
+java中常量值整数(-127~128)就使用了享元模式。
+Integer integer3=20;	//放入Integer常量池
+Integer integer4=20;
+System.out.println( integer3==integer4 );	//true
 #### 桥梁模式
 ##### 1.什么是桥梁模式
 ##### 2.什么时候使用桥梁模式
