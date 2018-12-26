@@ -1465,11 +1465,64 @@ Integer integer4=20;
 System.out.println( integer3==integer4 );	//true
 #### 桥梁模式
 ##### 1.什么是桥梁模式
+桥梁模式也叫桥接模式，将抽象化与实现化脱耦，使得二者可以独立地变化
 ##### 2.什么时候使用桥梁模式
+不希望或不适用使用继承的场景。接口或抽象不稳定的场景。重用性要求较高的场景。
 ##### 3.UML类图
-![]()
+![](http://www.plantuml.com/plantuml/png/VOx1Yi8m48RlUOeSTrdo1ilIigUU1FK5OZAjWMH6awaYjUykjbKZBHxdvvkFhqYi8xV12uSCiTO6P1KE7W8WK-p4ZpoHizBIXWBmtc7pzVqQIxmyjbv8utLAyf_GH638D2k4xYEmFTCTqBl4KHkUm78w7U4p9CAnXSH3H2QG3N0L_D0nFg-XTWZspT6BvJYfrFKlrudbnZcN9_mgHNcpc2UCWfmf06qR_0q0)
 ##### 4.JAVA实现
 ```java
+public interface Implementor {
+    public void doSomething();
+    public void doAnything();
+}
+public class ConcreteImplementorTwo implements Implementor {
+    public void doSomething() {
+        System.out.println("doSomethingTwo");
+    }
+
+    public void doAnything() {
+        System.out.println("doAnythingTwo");
+    }
+}
+public class ConcreteImplementorOne implements Implementor {
+    public void doSomething() {
+        System.out.println("doSomethingOne");
+    }
+
+    public void doAnything() {
+        System.out.println("doAnythingOne");
+    }
+}
+public abstract class Abstraction {
+    private Implementor implementor;
+
+    protected Abstraction(Implementor implementor) {
+        this.implementor = implementor;
+    }
+    public void request(){
+        this.implementor.doAnything();
+        this.implementor.doSomething();
+    }
+
+}
+public class RefinedAbstraction extends Abstraction {
+    protected RefinedAbstraction(Implementor implementor) {
+        super(implementor);
+    }
+    @Override
+    public void request(){
+        super.request();
+    }
+}
+public class Client {
+    public static void main(String[] args) {
+        Implementor implementor=new ConcreteImplementorOne();
+        RefinedAbstraction refinedAbstraction=new RefinedAbstraction(implementor);
+        refinedAbstraction.request();
+    }
+}
 ```
 ##### 5.其他
-  
+三层继承结构的的时候，son father grandsin，son层是不敢覆盖father的别的方法，因为不知道son会不会使用。如果使用桥接模式，就可以有效的
+提供自己想要提供的指定方法，用户只关注RefinedAbstraction这个类。

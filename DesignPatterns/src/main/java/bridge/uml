@@ -1,0 +1,20 @@
+@startuml
+interface Implementor{
++ void doSomething()
++ void doAnything()
+}
+ class ConcreteImplementorOne{
+}
+ class ConcreteImplementorTwo{
+}
+abstract class Abstraction{
++ void request()
++ Implementor getIml()
+}
+class RefinedAbstraction{
+}
+ConcreteImplementorOne --|> Implementor
+ConcreteImplementorTwo --|> Implementor
+Implementor <--o Abstraction
+RefinedAbstraction --|> Abstraction
+@enduml
