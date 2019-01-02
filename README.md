@@ -1,7 +1,8 @@
 | Ⅰ | Ⅱ | Ⅲ | Ⅳ | Ⅴ |Ⅵ |Ⅶ|Ⅷ|Ⅸ|Ⅹ|Ⅺ|
 | :--------: | :--------: | :--------: | :--------: |:--------: |:--------: |:--------: |:--------: |:--------: |:--------: |:--------: |
 |算法:scissors:| 语言:books:| 数据库:floppy_disk:| 中间件:wrench:| 设计:pencil2:| 项目:office:| 想法:stars:| 大数据:1234:| 代码解析:100:| 工作记录:scroll:| 杂记:smoking: |
-## :coffee: 语言
+## :scissors: 算法
+## :books: 语言
 ### java语法
 #### 第某章：java泛型
 ### kotlin基础语法
@@ -51,8 +52,15 @@ interface List<T> {
   operator fun Int): T //在接口和类中T可以当作普通类型使用
 ```
 如果继承了一个泛型类或泛型接口，你得为基础类提供一个类型实参或是另外一个类型形参数,如StringList:List<String>或List2<T>:List<T>
-## :computer: 项目
-## :bulb: 设计
+## :floppy_disk: 数据库
+## :wrench: 中间件
+## :pencil2: 设计
 ### 设计模式
  [设计模式](https://github.com/zhouluoyang0406/SelfIntroduction/blob/master/DesignPatterns/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F.md)
-
+### 重构:代码 
+## :office: 项目
+## :stars: 想法
+## :1234: 大数据
+## :100: 代码解析
+## :scroll: 工作记录
+## :smoking: 杂记
