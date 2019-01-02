@@ -1,6 +1,6 @@
 | Ⅰ | Ⅱ | Ⅲ | Ⅳ | Ⅴ |Ⅵ |Ⅶ|Ⅷ|Ⅸ|Ⅹ|Ⅺ|
 | :--------: | :--------: | :--------: | :--------: |:--------: |:--------: |:--------: |:--------: |:--------: |:--------: |:--------: |
-|算法:scissors:| 语言:books:| 数据库:floppy_disk:| 中间件:coffee:| 设计:coffee:| 项目:coffee:| 想法:coffee:| 大数据:coffee:| 代码解析:computer:| 工作记录:bulb:| 杂记:bulb: |
+|算法:scissors:| 语言:books:| 数据库:floppy_disk:| 中间件:wrench:| 设计:pencil2:| 项目:office:| 想法:stars:| 大数据:1234:| 代码解析:100:| 工作记录:scroll:| 杂记:smoking: |
 ## :coffee: 语言
 ### java语法
 #### 第某章：java泛型
