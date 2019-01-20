@@ -67,6 +67,7 @@ interface List<T> {
 #### 线程安全与锁优化
 ## :floppy_disk: 数据库
 ## :wrench: 中间件
+### kafka
 ## :pencil2: 设计
 ### 设计模式
  [设计模式](https://github.com/zhouluoyang0406/SelfIntroduction/blob/master/DesignPatterns/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F.md)
