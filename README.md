@@ -77,15 +77,37 @@ canal的定位是基于数据库增量日志解析，提供增量数据订阅&�
 1.使用git下载canal项目，后续的源码详解会用的到
 ```bash
 git clone https://github.com/alibaba/canal.git
-```
-git clone https://github.com/alibaba/canal.git
 cd canal; 
 mvn clean install -Dmaven.test.skip -Denv=release
+```
+
 2.mysql开启binlog
 查看是否开启(如果没有返回则表示没有开启，需要修改配置)
+```bash
 show master status;
-mac环境查看mysql配置路径
-mysql --help --verbose | grep my.cnf(/etc/my.cnf /etc/mysql/my.cnf /usr/local/etc/my.cnf ~/.my.cnf)
+```
+3.mac环境查看mysql配置路径(/etc/my.cnf /etc/mysql/my.cnf /usr/local/etc/my.cnf ~/.my.cnf)
+```bash
+~ appleluo$ mysql --help --verbose | grep my.cnf
+order of preference, my.cnf, $MYSQL_TCP_PORT,
+/etc/my.cnf /etc/mysql/my.cnf /usr/local/etc/my.cnf ~/.my.cnf
+```
+4.修改配置
+```bash
+[mysqld]
+log-bin=mysql-bin #添加这行
+binlog-format=ROW #添加这行,选择row模式
+server_id=1 #添加这行,配置mysql replaction需要定义，不能和canal的slaveId重复
+```
+5.再次查看mysql是否开启binlog
+```bash
+show master status;
+```
+6.启动canal服务端
+```bash
+show master status;
+```
+
 ##### 单机部署
 ###### 架构
 ###### 配置架构
