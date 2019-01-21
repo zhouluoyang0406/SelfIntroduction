@@ -74,6 +74,18 @@ canal的定位是基于数据库增量日志解析，提供增量数据订阅&�
 代码逻辑在各个中间件中属于比较容易的。通过学习canal的使用和源码，不仅仅能在开发过程中提供另外设计的思路，更能在学习源码的过程中提高自己代码水平，可以说这是码龄3年内程序员最好的选择。后续的内容我主要从三个方向
 区讲述canal。一是canal的使用，canal有哪些功能，生产环境canal是如何发挥功效的，开发人员又是如何使用的，二是canal大体的工作原理，三是canal的源码解析，包括一些实体类的作用和框架。主要的逻辑就是从宏观到微观。
 #### 简单使用
+1.使用git下载canal项目，后续的源码详解会用的到
+```bash
+git clone https://github.com/alibaba/canal.git
+```
+git clone https://github.com/alibaba/canal.git
+cd canal; 
+mvn clean install -Dmaven.test.skip -Denv=release
+2.mysql开启binlog
+查看是否开启(如果没有返回则表示没有开启，需要修改配置)
+show master status;
+mac环境查看mysql配置路径
+mysql --help --verbose | grep my.cnf(/etc/my.cnf /etc/mysql/my.cnf /usr/local/etc/my.cnf ~/.my.cnf)
 ##### 单机部署
 ###### 架构
 ###### 配置架构
@@ -87,6 +99,10 @@ canal的定位是基于数据库增量日志解析，提供增量数据订阅&�
 ###### 配置架构
 ###### 代码示例
 ##### 内嵌canal使用
+###### 架构
+###### 配置架构
+###### 代码示例
+##### docker部署
 ###### 架构
 ###### 配置架构
 ###### 代码示例
