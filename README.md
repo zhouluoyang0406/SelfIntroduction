@@ -74,40 +74,107 @@ canal的定位是基于数据库增量日志解析，提供增量数据订阅&�
 代码逻辑在各个中间件中属于比较容易的。通过学习canal的使用和源码，不仅仅能在开发过程中提供另外设计的思路，更能在学习源码的过程中提高自己代码水平，可以说这是码龄3年内程序员最好的选择。后续的内容我主要从三个方向
 区讲述canal。一是canal的使用，canal有哪些功能，生产环境canal是如何发挥功效的，开发人员又是如何使用的，二是canal大体的工作原理，三是canal的源码解析，包括一些实体类的作用和框架。主要的逻辑就是从宏观到微观。
 #### 简单使用
-1.使用git下载canal项目，后续的源码详解会用的到
-```bash
-git clone https://github.com/alibaba/canal.git
-cd canal; 
-mvn clean install -Dmaven.test.skip -Denv=release
-```
-
-2.mysql开启binlog
+1.mysql开启binlog
 查看是否开启(如果没有返回则表示没有开启，需要修改配置)
 ```bash
 show master status;
 ```
-3.mac环境查看mysql配置路径(/etc/my.cnf /etc/mysql/my.cnf /usr/local/etc/my.cnf ~/.my.cnf)
+2.mac环境查看mysql配置路径(/etc/my.cnf /etc/mysql/my.cnf /usr/local/etc/my.cnf ~/.my.cnf)
 ```bash
 ~ appleluo$ mysql --help --verbose | grep my.cnf
 order of preference, my.cnf, $MYSQL_TCP_PORT,
 /etc/my.cnf /etc/mysql/my.cnf /usr/local/etc/my.cnf ~/.my.cnf
 ```
-4.修改配置
+3.修改配置
 ```bash
 [mysqld]
 log-bin=mysql-bin #添加这行
 binlog-format=ROW #添加这行,选择row模式
 server_id=1 #添加这行,配置mysql replaction需要定义，不能和canal的slaveId重复
 ```
-5.再次查看mysql是否开启binlog
+4.再次查看mysql是否成功开启binlog
 ```bash
 show master status;
 ```
-6.启动canal服务端
+5.使用git下载canal项目，后续的源码详解会用的到。你可以选择最近的release版本进行打包
 ```bash
-show master status;
+git clone https://github.com/alibaba/canal.git
+cd canal; 
+mvn clean install -Dmaven.test.skip -Denv=release
 ```
+6.解压tar,$version换成你打包的版本
+```bash
+mkdir /tmp/canal
+tar zxvf canal.deployer-$version.tar.gz  -C /tmp/canal
+cd /tmp/canal
+```
+7.修改配置(1.0.26+)
+```bash
+vim conf/example/instance.properties
 
+#################################################
+## mysql serverId , v1.0.26+ will autoGen
+# canal.instance.mysql.slaveId=0
+
+# enable gtid use true/false
+canal.instance.gtidon=false
+
+# position info
+canal.instance.master.address=127.0.0.1:3306
+canal.instance.master.journal.name=
+canal.instance.master.position=
+canal.instance.master.timestamp=
+canal.instance.master.gtid=
+
+# rds oss binlog
+canal.instance.rds.accesskey=
+canal.instance.rds.secretkey=
+canal.instance.rds.instanceId=
+
+# table meta tsdb info
+canal.instance.tsdb.enable=true
+#canal.instance.tsdb.url=jdbc:mysql://127.0.0.1:3306/canal_tsdb
+#canal.instance.tsdb.dbUsername=
+#canal.instance.tsdb.dbPassword=
+
+#canal.instance.standby.address =
+#canal.instance.standby.journal.name =
+#canal.instance.standby.position =
+#canal.instance.standby.timestamp =
+#canal.instance.standby.gtid=
+
+# username/password
+canal.instance.dbUsername=root
+canal.instance.dbPassword=shihui521
+canal.instance.connectionCharset = UTF-8
+canal.instance.defaultDatabaseName =datahub
+# enable druid Decrypt database password
+canal.instance.enableDruid=false
+#canal.instance.pwdPublicKey=MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBALK4BUxdDltRRE5/zXpVEVPUgunvscYFtEip3pmLlhrWpacX7y7GCMo2/JM6LeHmiiNdH1FWgGCpUfircSwlWKUCAwEAAQ==
+
+# table regex
+canal.instance.filter.regex=.*\\..*
+# table black regex
+canal.instance.filter.black.regex=
+
+# mq config
+canal.mq.topic=example
+# dynamic topic route by schema or table regex
+#canal.mq.dynamicTopic=.*,mytest,mytest\\..*,mytest2.user
+canal.mq.partition=0
+# hash partition config
+#canal.mq.partitionsNum=3
+#canal.mq.partitionHash=test.table:id^name,.*\\..*
+#################################################
+```
+8.执行
+```bash
+sh bin/startup.sh
+```
+9.查看启动log
+```bash
+cat logs/example/example.log
+```
 ##### 单机部署
 ###### 架构
 ###### 配置架构
