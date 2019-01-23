@@ -175,6 +175,20 @@ sh bin/startup.sh
 ```bash
 cat logs/example/example.log
 ```
+10.启动客户端(在通过项目的example目录下执行客户端函数)
+```bash
+mvn exec:java -Dexec.mainClass="com.alibaba.otter.canal.example.SimpleCanalClientTest"
+```
+11.触发生产binlog日志
+```bash
+CREATE DATABASE datahub DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+create table tb_dept(
+      id int(11) primary key auto_increment,
+     name varchar(18),
+     description varchar(100)
+);
+```
+12.在控制台或者logs中会看到binlog事件被打印出来
 ##### 单机部署
 ###### 架构
 ###### 配置架构
