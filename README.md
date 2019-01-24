@@ -90,7 +90,7 @@ canal的作用会在后续的章节进行详细描述，这一节主要讲明白
 
 定位： 基于数据库增量日志解析，提供增量数据订阅&消费，目前主要支持了mysql
 ##### 工作原理
-![工作原理](canal/MysqlActiveStandby.tiff)
+![工作原理](img/canal/MysqlActiveStandby.tiff)
 
 #### 单机部署
 1.mysql开启binlog
