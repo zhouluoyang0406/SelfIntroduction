@@ -131,7 +131,7 @@ mvn clean install -Dmaven.test.skip -Denv=release
 6.解压tar,$version换成你打包的版本
 ```bash
 mkdir /tmp/canal
-tar zxvf canal.deployer-$version.tar.gz  -C /tmp/canal
+tar zxvf target/canal.deployer-$version.tar.gz  -C /tmp/canal
 cd /tmp/canal
 ```
 7.修改配置(1.0.26+)
