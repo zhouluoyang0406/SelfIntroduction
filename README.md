@@ -217,9 +217,24 @@ create table tb_dept(
 12.在控制台或者logs中会看到binlog事件被打印出来
 
 ##### 集群部署-server主备
-###### 架构
-###### 配置架构
-###### 代码示例
+1.机器准备
+    a.  运行canal的机器： 192.168.2.105 , 192.168.2.102.
+    b.  zookeeper地址为192.168.2.105:2181
+    c.  mysql地址：192.168.2.105:3306
+2.mysql设置允许用户外网访问
+```bash
+set global validate_password_policy=0;//设置密码策略,太复杂的总是失败
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY 'shihui521' WITH GRANT OPTION;//授权
+select user,host from user;//出现root %表示成功
+```
+3.mysql设置对外开放端口
+```bash
+vim /usr/local/etc/my.cnf//#bind-address = 127.0.0.1 注释掉该行
+sudo mysql.server restart
+netstat -an|grep 3306//查看效果
+```
+![mysql对外开放端口成功](img/canal/mysqlOpenSocketSuccess.png)
+
 ##### 集群部署-client主备
 ###### 架构
 ###### 配置架构
