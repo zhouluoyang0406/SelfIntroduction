@@ -255,6 +255,11 @@ c.进入zk查看 get /otter/canal/destinations/example/running
 a.192.168.2.103关闭canal
 b.发现192.168.2.102正在运行
 ![192.168.2.102运行](img/canal/switchSuccess.png)
+6.注意事项
+a.CanalConnectors.newClusterConnector()客户端要使用这个类,server主备才能通过zk切换
+b.切换后消费会回退一条记录
+![回退前](img/canal/switchBefore.png)
+![回退后](img/canal/switchAfter.png)
 
 
 ##### 集群部署-client主备
