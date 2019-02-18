@@ -217,11 +217,11 @@ create table tb_dept(
 12.在控制台或者logs中会看到binlog事件被打印出来
 
 ##### 集群部署-server主备
-1.机器准备
-    a.  运行canal的机器： 192.168.2.103 , 192.168.2.102.
-    b.  zookeeper地址为192.168.2.103:2181
-    c.  mysql地址：192.168.2.103:3306
-2.mysql设置允许用户外网访问
+1.机器准备  
+    a.  运行canal的机器： 192.168.2.103 , 192.168.2.102.  
+    b.  zookeeper地址为192.168.2.103:2181  
+    c.  mysql地址：192.168.2.103:3306  
+2.mysql设置允许用户外网访问  
 ```bash
 set global validate_password_policy=0;//设置密码策略,太复杂的总是失败
 GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY 'shihui521' WITH GRANT OPTION;//授权
@@ -236,7 +236,7 @@ netstat -an|grep 3306//查看效果
 ![mysql对外开放端口成功](img/canal/mysqlOpenSocketSuccess.png)  
 4.修改两个机子上的配置
 ```bash
-b.修改canal目录下canal.properties
+a.修改canal目录下canal.properties
 canal.zkServers=10.20.144.51:2181
 canal.instance.global.spring.xml = classpath:spring/default-instance.xml
 b.修改example目录下instance.properties
@@ -252,11 +252,11 @@ b.进入环境192.168.2.102查看日志 cat /tmp/canal/logs/example/example.log
 c.进入zk查看 get /otter/canal/destinations/example/running  
 ![zk存在两个节点](img/canal/zkRegister.png)   
 6.尝试切换  
-a.192.168.2.103关闭canal
-b.发现192.168.2.102正在运行
+a.192.168.2.103关闭canal  
+b.发现192.168.2.102正在运行  
 ![192.168.2.102运行](img/canal/switchSuccess.png)  
 7.注意事项  
-a.CanalConnectors.newClusterConnector()客户端要使用这个类,server主备才能通过zk切换
+a.CanalConnectors.newClusterConnector()客户端要使用这个类,server主备才能通过zk切换  
 b.切换后消费会回退一条记录
 ![回退前](img/canal/switchBefore.png)
 ![回退后](img/canal/switchAfter.png)
