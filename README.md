@@ -263,9 +263,59 @@ b.切换后消费会回退一条记录
 
 
 ##### 集群部署-client主备
-###### 架构
-###### 配置架构
-###### 代码示例
+1.机器准备  
+a. 运行canal的机器： 192.168.2.105:11111   
+b. zookeeper地址为192.168.2.105:2181  
+c. mysql地址：192.168.2.105:3306  
+2.启动客户端  
+ClusterCanalClientTest启动两次(canal项目下的实例)  
+```java
+public class ClusterCanalClientTest extends AbstractCanalClientTest {
+
+    public ClusterCanalClientTest(String destination){
+        super(destination);
+    }
+
+    public static void main(String args[]) {
+        String destination = "example";
+
+        // 基于zookeeper动态获取canal server的地址，建立链接，其中一台server发生crash，可以支持failover
+        CanalConnector connector = CanalConnectors.newClusterConnector("127.0.0.1:2181", destination, "", "");
+
+        final ClusterCanalClientTest clientTest = new ClusterCanalClientTest(destination);
+        clientTest.setConnector(connector);
+        clientTest.start();
+
+        Runtime.getRuntime().addShutdownHook(new Thread() {
+
+            public void run() {
+                try {
+                    logger.info("## stop the canal client");
+                    clientTest.stop();
+                } catch (Throwable e) {
+                    logger.warn("##something goes wrong when stopping canal:", e);
+                } finally {
+                    logger.info("## canal client is down.");
+                }
+            }
+
+        });
+    }
+}
+```
+3.查看效果  
+a.zk查看效果  
+![zk查看效果](img/canal/ClientZk.png)  
+b.主client接受数据  
+![主client接受数据](img/canal/clientMaster.png)  
+c.备client不接受数据  
+![备client不接受数据](img/canal/clientSlave.png)  
+4.切换主备
+a.关闭主
+b.备开始接受数据
+![备开始接受数据](img/canal/clientReciveData.png)  
+c.zk中活跃的地址修改 
+![zk中活跃的地址修改](img/canal/zkSlave.png)  
 ##### 内嵌canal使用
 ###### 架构
 ###### 配置架构
