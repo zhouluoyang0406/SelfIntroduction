@@ -88,18 +88,18 @@ canal的作用会在后续的章节进行详细描述，这一节主要讲明白
 
 语言： 纯java开发  
 
-定位： 基于数据库增量日志解析，提供增量数据订阅&消费，目前主要支持了mysql
-##### 工作原理
-![工作原理](img/canal/MysqlActiveStandby.png)
-1.mysql-master将改变记录到二进制日志(binary log)中（这些记录叫做二进制日志事件，binary log events，可以通过show binlog events进行查看）；
-2.mysql-slave将master的binary log events拷贝到它的中继日志(relay log)；
-3.mysql-slave重做中继日志中的事件，将改变反映它自己的数据
-![Canal工作原理](img/canal/canalPrinciple.png)
-原理相对比较简单：
-1.canal模拟mysql slave的交互协议，伪装自己为mysql slave，向mysql master发送dump协议
-2.mysql master收到dump请求，开始推送binary log给slave(也就是canal)
-3.canal解析binary log对象(原始为byte流)
-#### 单机部署
+定位： 基于数据库增量日志解析，提供增量数据订阅&消费，目前主要支持了mysql  
+##### 工作原理  
+![工作原理](img/canal/MysqlActiveStandby.png)  
+1.mysql-master将改变记录到二进制日志(binary log)中（这些记录叫做二进制日志事件，binary log events，可以通过show binlog events进行查看）；  
+2.mysql-slave将master的binary log events拷贝到它的中继日志(relay log)；  
+3.mysql-slave重做中继日志中的事件，将改变反映它自己的数据  
+![Canal工作原理](img/canal/canalPrinciple.png)  
+原理相对比较简单：  
+1.canal模拟mysql slave的交互协议，伪装自己为mysql slave，向mysql master发送dump协议  
+2.mysql master收到dump请求，开始推送binary log给slave(也就是canal)  
+3.canal解析binary log对象(原始为byte流)  
+#### 单机部署  
 1.mysql开启binlog
 查看是否开启(如果没有返回则表示没有开启，需要修改配置)
 ```bash
