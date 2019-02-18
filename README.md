@@ -245,12 +245,12 @@ canal.instance.master.address = 10.20.144.15:3306
 //注意： 两台机器上的instance目录的名字需要保证完全一致，HA模式是依赖于instance name进行管理，同时必须都选择default-instance.xml配置
 ```
 5.检验是否成功  
-a.进入环境192.168.2.103查看日志 cat /tmp/canal/logs/example/example.log
-![192.168.2.103成功](img/canal/nodeSuccess.png)
-b.进入环境192.168.2.102查看日志 cat /tmp/canal/logs/example/example.log
-![192.168.2.102启动等待](img/canal/nodeFail.png)
-c.进入zk查看 get /otter/canal/destinations/example/running
-![zk存在两个节点](img/canal/zkRegister.png)  
+a.进入环境192.168.2.103查看日志 cat /tmp/canal/logs/example/example.log  
+![192.168.2.103成功](img/canal/nodeSuccess.png)  
+b.进入环境192.168.2.102查看日志 cat /tmp/canal/logs/example/example.log  
+![192.168.2.102启动等待](img/canal/nodeFail.png)  
+c.进入zk查看 get /otter/canal/destinations/example/running  
+![zk存在两个节点](img/canal/zkRegister.png)   
 6.尝试切换  
 a.192.168.2.103关闭canal
 b.发现192.168.2.102正在运行
