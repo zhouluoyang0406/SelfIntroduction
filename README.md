@@ -233,8 +233,8 @@ vim /usr/local/etc/my.cnf//#bind-address = 127.0.0.1 注释掉该行
 sudo mysql.server restart
 netstat -an|grep 3306//查看效果
 ```
-![mysql对外开放端口成功](img/canal/mysqlOpenSocketSuccess.png)
-3.修改两个机子上的配置
+![mysql对外开放端口成功](img/canal/mysqlOpenSocketSuccess.png)  
+4.修改两个机子上的配置
 ```bash
 b.修改canal目录下canal.properties
 canal.zkServers=10.20.144.51:2181
@@ -244,18 +244,18 @@ canal.instance.mysql.slaveId = 1234 ##另外一台机器改成1235，保证slave
 canal.instance.master.address = 10.20.144.15:3306
 //注意： 两台机器上的instance目录的名字需要保证完全一致，HA模式是依赖于instance name进行管理，同时必须都选择default-instance.xml配置
 ```
-4.检验是否成功
+5.检验是否成功  
 a.进入环境192.168.2.103查看日志 cat /tmp/canal/logs/example/example.log
 ![192.168.2.103成功](img/canal/nodeSuccess.png)
 b.进入环境192.168.2.102查看日志 cat /tmp/canal/logs/example/example.log
 ![192.168.2.102启动等待](img/canal/nodeFail.png)
 c.进入zk查看 get /otter/canal/destinations/example/running
-![zk存在两个节点](img/canal/zkRegister.png)
-5.尝试切换
+![zk存在两个节点](img/canal/zkRegister.png)  
+6.尝试切换  
 a.192.168.2.103关闭canal
 b.发现192.168.2.102正在运行
-![192.168.2.102运行](img/canal/switchSuccess.png)
-6.注意事项
+![192.168.2.102运行](img/canal/switchSuccess.png)  
+7.注意事项  
 a.CanalConnectors.newClusterConnector()客户端要使用这个类,server主备才能通过zk切换
 b.切换后消费会回退一条记录
 ![回退前](img/canal/switchBefore.png)
