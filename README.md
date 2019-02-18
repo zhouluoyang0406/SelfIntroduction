@@ -310,7 +310,7 @@ b.主client接受数据
 ![主client接受数据](img/canal/clientMaster.png)  
 c.备client不接受数据  
 ![备client不接受数据](img/canal/clientSlave.png)  
-4.切换主备  
+4.切换主备    
 a.关闭主  
 b.备开始接受数据  
 ![备开始接受数据](img/canal/clientReciveData.png)  
